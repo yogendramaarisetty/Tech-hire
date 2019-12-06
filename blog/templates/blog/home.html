@@ -1,42 +1,43 @@
-{% extends "blog/base.html" %}
-{% block content %}
-{% if user.is_authenticated %}
+{% extends "blog/base.html" %} {% block content %} {% if user.is_authenticated %}
 
-
-    <div class="sidebar">
+<div class="row mt-3">
+    <div class="col-lg-3 col-md-6">
+        <div class="sidebar">
             <div class="card bg-light mb-3" style="max-width: 20rem;">
                 <div class="card-header">Our Sidebar</div>
                 <div class="card-body">
                     <div class="list-group">
-                            <a href="#" class="list-group-item list-group-item-action">
+                        <a href="#" class="list-group-item list-group-item-action">
                                 Latest posts
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action">Announcements
+                        <a href="#" class="list-group-item list-group-item-action">Announcements
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action">Calender
+                        <a href="#" class="list-group-item list-group-item-action">Calender
                             </a>
-                            <a href="#" class="list-group-item list-group-item-action ">etc
+                        <a href="#" class="list-group-item list-group-item-action ">etc
                             </a>
                     </div>
                 </div>
             </div>
         </div>
-  
-  <div class="posts">
-        {% for i in posts %}
-        <div  class="card bg-light mb-3" style="max-width: 40rem;">
-            <div class="card-header"><strong style="color:blue; font-size: 14px;" >{{ i.author.username }}</strong> 
-            <h6>{{i.date | date:"F d, Y"}}</h6></div>
-            <div class="card-body">
-                <h4 class="card-title">  {{ i.Title }} </h1>
-                <p class="card-text">{{i.Content}}</p>
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <div class="posts">
+            {% for i in posts %}
+            <div class="card bg-light mb-3" style="max-width: 40rem;">
+                <div class="card-header">
+                    <strong id="username">{{ i.author.username }}</strong>
+                    <small>{{i.date | date:"F d, Y"}}</small>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-title"> {{ i.Title }} </h6>
+                    <p class="card-text">{{i.Content}}</p>
+                </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-   </div>
-    
+    </div>
+</div>
 {% else %}
 <p> You are not signed in Please <a href="{% url 'login' %}">Sign In </a></p>
-{% endif %}
-{% endblock content %}
-
+{% endif %} {% endblock content %}
