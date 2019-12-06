@@ -5,8 +5,6 @@ from .forms import UserRegisterForm
 from django.contrib.auth import authenticate
 
 def register(request):
-    if request.user.is_authenticated():
-        return redirect('blog-home')
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
         if form.is_valid():

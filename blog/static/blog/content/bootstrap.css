@@ -5024,7 +5024,8 @@ input[type="button"].btn-block {
 }
 
 #form {
-    max-width: fit-content;
+    max-width: 400px;
+    min-width: 300px;
 }
 
 #formheader {
