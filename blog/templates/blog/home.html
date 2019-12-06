@@ -25,12 +25,13 @@
         <div class="posts">
             {% for i in posts %}
             <div class="card bg-light mb-3" style="max-width: 40rem;">
-                <div class="card-header"><strong style="color:blue; font-size: 14px;">{{ i.author.username }}</strong>
-                    <h6>{{i.date | date:"F d, Y"}}</h6>
+                <div class="card-header">
+                    <strong id="username">{{ i.author.username }}</strong>
+                    <small>{{i.date | date:"F d, Y"}}</small>
                 </div>
                 <div class="card-body">
-                    <h4 class="card-title"> {{ i.Title }} </h1>
-                        <p class="card-text">{{i.Content}}</p>
+                    <h6 class="card-title"> {{ i.Title }} </h6>
+                    <p class="card-text">{{i.Content}}</p>
                 </div>
             </div>
             {% endfor %}

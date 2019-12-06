@@ -4637,6 +4637,14 @@ input[type="button"].btn-block {
     text-decoration: none;
 }
 
+#username {
+    color: #2e82e9;
+    font-size: 14px;
+    text-transform: capitalize;
+    padding-right: 20px;
+    letter-spacing: 0.03rem;
+}
+
 .navbar-toggler-icon {
     display: inline-block;
     width: 1.5em;
@@ -5057,6 +5065,7 @@ input[type="button"].btn-block {
 
 .card-text:last-child {
     margin-bottom: 0;
+    font-weight: 400;
 }
 
 .card-link:hover {
