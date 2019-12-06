@@ -11,65 +11,58 @@
     {% endif %} {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static 'blog/content/bootstrap.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'blog/content/bootstrap-grid.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <script src="{% static 'blog/script/bootstrap.bundle.js' %}"></script>
-    <script src="{% static 'blog/script/bootstrap.js' %}"></script>
-    <script src="{% static 'blog/script/jquery.js' %}"></script>
-    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script src="{% static 'blog/scripts/jquery.js' %}"></script>
+    <script src="{% static 'blog/scripts/bootstrap.min.js' %}"></script>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
 </head>
-<nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
 <span class="navbar-toggler-icon"></span>
 </button>
-    <a class="navbar-brand" href="#!">Django</a>
+        <a class="navbar-brand" href="{% url 'blog-home'%}">Django-Blog</a>
 
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav mr-auto mt-2 mt-md-0">
-            <li class="nav-item active">
-                {% if user.is_authenticated %}
-                <a class="nav-link" href="{% url 'blog-home' %}">Home
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+                <li class="nav-item active">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'blog-home' %}">Home
                 {%endif%}
       <span class="sr-only">(current)</span>
     </a>
-            </li>
-
-            <li class="nav-item">
-                {% if user.is_authenticated %}
-                <a class="nav-link" href="{% url 'blog-about' %}">About</a> {%endif%}
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    {% if user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'profile' %}" style="text-transform:capitalize">{{user.username}}</a> {% else %}
-                    <a class="nav-link" href="{% url 'user-register' %}">Register</a> {% endif %}
-
                 </li>
+
                 <li class="nav-item">
                     {% if user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a> {% else %}
-                    <a class="nav-link" href="{% url 'login' %}">Login</a> {% endif %}
-
+                    <a class="nav-link" href="{% url 'blog-about' %}">About</a> {%endif%}
                 </li>
             </ul>
-        </form>
-    </div>
-</nav>
+            <form class="form-inline my-2 my-lg-0">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'profile' %}" style="text-transform:capitalize">{{user.username}}</a> {% else %}
+                        <a class="nav-link" href="{% url 'user-register' %}">Register</a> {% endif %}
 
+                    </li>
+                    <li class="nav-item">
+                        {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a> {% else %}
+                        <a class="nav-link" href="{% url 'login' %}">Login</a> {% endif %}
 
-<body>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </nav>
 
-    <div class="body-content">
-
-
+    <div class="container-fluid">
 
         {% block content%} {% endblock %}
     </div>
+
 </body>
 
 </html>

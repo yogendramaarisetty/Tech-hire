@@ -16,7 +16,7 @@
     --green: #28a745;
     --teal: #20c997;
     --cyan: #17a2b8;
-    --white: #fff;
+    --white: rgb(139, 139, 139)49, 45, 45);
     --gray: #6c757d;
     --gray-dark: #343a40;
     --primary: #007bff;
@@ -65,12 +65,12 @@ section {
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 1rem;
-    font-weight: 400;
+    font-size: 0.85rem;
+    font-weight: 500;
     line-height: 1.5;
-    color: #212529;
+    color: #1f2122;
     text-align: left;
-    background-color: #fff;
+    background-color: #d3d3d3;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -5002,8 +5002,6 @@ input[type="button"].btn-block {
 }
 
 .card {
-    align-items: center;
-    max-width: 30%;
     position: relative;
     display: -ms-flexbox;
     display: flex;
@@ -5015,6 +5013,15 @@ input[type="button"].btn-block {
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
+}
+
+#form {
+    max-width: fit-content;
+}
+
+#formheader {
+    width: fit-content;
+    margin: auto;
 }
 
 .card>hr {
@@ -5061,6 +5068,7 @@ input[type="button"].btn-block {
 }
 
 .card-header {
+    width: 100%;
     padding: 0.75rem 1.25rem;
     margin-bottom: 0;
     background-color: rgba(0, 0, 0, 0.03);
