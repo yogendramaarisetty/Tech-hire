@@ -26,10 +26,10 @@
         </div>
     </div>
     <div class="card-body">
-        <form style="max-width:250px; margin: auto;" method='POST'>
+        <form style="max-width:350px; margin: auto;" method='POST'>
             {% csrf_token %}
             <fieldset>
-                {{form.username | as_crispy_field}} {{form.email | as_crispy_field}} {{form.password1 | as_crispy_field}} {{form.password2 | as_crispy_field}}
+                {{form.username | as_crispy_field}} {{form.firstname|as_crispy_field}}  {{form.lastname|as_crispy_field}} {{form.email | as_crispy_field}} {{form.college | as_crispy_field}} {{form.password1 | as_crispy_field}} {{form.password2 | as_crispy_field}}
                 <div class="form-group">
 
                     <button type="submit" class="btn btn-primary" style="margin-left: 67%;">Register</button>
