@@ -32,8 +32,8 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
-    'questions.apps.QuestionsConfig',
     'blog.apps.BlogConfig',
+    'challenge.apps.ChallengeConfig',
     'widget_tweaks',
     'crispy_forms',
     'django.contrib.admin',

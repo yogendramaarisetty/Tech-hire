@@ -3,6 +3,11 @@
 {% block title %}HA Admin{% endblock %}
 
 {% block branding %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'blog/content/admin.css' %}">
+<link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet">
+
+
 <h1 id="site-name"><a href="{% url 'admin:index' %}">Host Analytics Administration</a></h1>
 {% endblock %}
 

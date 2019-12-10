@@ -10595,6 +10595,8 @@ a.text-dark:focus {
         border-color: #dee2e6;
     }
 }
-
-
+body{
+    background-color: rgba(236, 236, 236, 0.705);
+    font-family:  'Hind', sans-serif;;
+}
 /*# sourceMappingURL=bootstrap.css.map */
