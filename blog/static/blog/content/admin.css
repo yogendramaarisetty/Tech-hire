@@ -115,8 +115,8 @@ a.button {
 .inline-group h2 {
     margin: 0;
     padding: 8px;
-    font-weight: 400;
-    font-size: 13px;
+    font-weight: 600;
+    font-size: 15px;
     box-shadow: 0px 0px 1px 0 rgba(0, 18, 72, 0.28);
     text-align: left;
     border-top-left-radius: 5px;
@@ -127,7 +127,7 @@ a.button {
     /* border: solid; */
     border-color: #adadad;
     border-width: 1.5px;
-    /* color: #fff; */
+    color: #000;
 }
 
 a.section:link,
