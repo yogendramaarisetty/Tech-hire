@@ -1,4 +1,4 @@
-{% extends "blog/base.html" %} {% block content %} {% load crispy_forms_tags %}
+{% extends "challenge/base.html" %} {% block content %} {% load crispy_forms_tags %}
 <br>
 <div id="form" class="card bg-light mb-3" style="margin:auto;">
     <div class="card-header">
@@ -29,11 +29,11 @@
         <form style="max-width:350px; margin: auto;" method='POST'>
             {% csrf_token %}
             <fieldset>
-                {{form.username | as_crispy_field}} {{form.firstname|as_crispy_field}}  {{form.lastname|as_crispy_field}} {{form.email | as_crispy_field}} {{form.college | as_crispy_field}} {{form.password1 | as_crispy_field}} {{form.password2 | as_crispy_field}}
+                {{form.email | as_crispy_field}} {{form.username | as_crispy_field}} {{form.fullname|as_crispy_field}}   {{form.password1 | as_crispy_field}} {{form.password2 | as_crispy_field}}
                 <div class="form-group">
 
                     <button type="submit" class="btn btn-primary" style="margin-left: 67%;">Register</button>
-                    <small style="max-width:fit-content;margin:auto; padding: 10px;">Already have an account? <a href="{% url 'login' %}">Sign in</small>
+                    {% comment %} <small style="max-width:fit-content;margin:auto; padding: 10px;">Already have an account? <a href="{% url 'login' %}">Sign in</small> {% endcomment %}
                 </div>
 
                 </p>

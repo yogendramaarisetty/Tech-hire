@@ -35,3 +35,7 @@ Questions
     - outputfiles
 
     
+Create tests viewing app
+After that navigate to the test registration form
+show intruction page with start test button
+Navigate to test page with rendered questions

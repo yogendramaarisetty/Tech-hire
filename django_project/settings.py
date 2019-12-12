@@ -31,8 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'users.apps.UsersConfig',
-    'blog.apps.BlogConfig',
     'challenge.apps.ChallengeConfig',
     'widget_tweaks',
     'crispy_forms',
@@ -80,8 +78,13 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django',
+        'USER':'postgres',
+        'PASSWORD':'yogi',
+        'HOST':'localhost',
+        'PORT':'5432',
+
     }
 }
 
@@ -125,6 +128,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIAL_URL = '/media/'
-
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 CRISPY_TEMPLATE_PACK = "bootstrap4"
-LOGIN_REDIRECT_URL ="blog-home"
+LOGIN_REDIRECT_URL ="home"

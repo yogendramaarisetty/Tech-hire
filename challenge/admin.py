@@ -26,6 +26,7 @@ class ChallengeAdmin(admin.ModelAdmin):
                   'Duration',
                   'Active',
                   'College',
+                  'Date'
             ),
         }),
     )
