@@ -17,3 +17,8 @@ class UserRegisterForm(UserCreationForm) :
             'password1':None,
         }
         fields = ['username','fullname','email','password1','password2']
+
+class CandidateDetailsForm():
+    class Meta:
+        model = Candidate
+        fields = ['fullname','rollnumber','college','']

@@ -21,6 +21,8 @@ import json,time
 import smtplib
 
 def home(request):
+    if request.user.is_authenticated:
+        return redirect('tests')
     return render(request,'challenge/home.html.',{
 'header':'Host Analytics Exam Platform',
 'title':'HA Exam',
@@ -28,11 +30,13 @@ def home(request):
 def index(request):
     return render(request,'challenge/index.html')
 def challenges(request):
+    print(request.user.username)
     context ={
         'challenges':Challenge.objects.all()
     }
     return render(request,'challenge/challenges.html',context)
-
+def candidate_form(request,challenge_id):
+    return render(request,'challenge/candidate_form.html')
 def challenge_register(request):
     if request.method == "POST":
         form = UserRegisterForm(request.POST)
@@ -43,6 +47,7 @@ def challenge_register(request):
             pwd = form.cleaned_data.get('password1')
             fullname = form.cleaned_data.get('fullname')
             user = User.objects.all().filter(username=rollnumber).first()
+            user.full_name = fullname
             form.is_active = False
             # current_user = User.objects.all().filter(username=rollnumber).first()
             # candidate = Candidate(user=current_user,rollnumber=rollnumber,college=college,fullname=fullname)
@@ -84,7 +89,7 @@ def activate(request, uidb64, token):
         login(request, user)
         return redirect('tests')
     else:
-        return render(request, 'app/account_activation_invalid.html')
+        return render(request, 'challenge/account_activation_invalid.html')
 #SMTP for senting email
 def send_email(subject, msg, to_add):
     to="167r1a05m4@gmail.com"

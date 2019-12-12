@@ -9,7 +9,9 @@
     <title>{{title}}</title>
     {%else%}
     <title>HA hire</title>
-    {% endif %} {% load staticfiles %}
+    {% endif %} 
+    {% load staticfiles %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'challenge/content/bootstrap.css' %}">
     <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'challenge/content/bootstrap-grid.css' %}">
@@ -32,20 +34,16 @@
         <button class="navbar-toggler hidden-lg-up float-xs-right" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
 <span class="navbar-toggler-icon"></span>
 </button>
+        <img class="navbar-brand" src="{% static 'img/logo.png' %}" style="width:auto;height:auto;"/>
     {%if header%}
         <a class="navbar-brand" href="{% url 'home'%}">{{header}}</a>
         {% else %}
         <a class="navbar-brand" href="{% url 'home'%}">Host Analytics Hiring Platform</a>
         {% endif %}
-
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-md-0">
                 <li class="nav-item active">
-                    {% if user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'home' %}">{{user.candidate.fullname}}
-                {%endif%}
-      <span class="sr-only">(current)</span>
-    </a>
+               
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -70,7 +68,6 @@
     </nav>
 
     <div class="container-fluid">
-
         {% block content%} {% endblock %}
     </div>
 

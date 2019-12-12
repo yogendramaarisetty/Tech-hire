@@ -1,9 +1,10 @@
 {% extends "admin/base.html" %}
 
-{% block title %}HA Admin{% endblock %}
-
+{% block title %}HA Admin{% endblock %}{% load static %}
+ {% block extrahead %}
+        <link rel="icon" href="{% static 'img/favicon.ico' %}" sizes="48x48" />
+    {% endblock %}
 {% block branding %}
-{% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'challenge/content/admin.css' %}">
 <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet">
 

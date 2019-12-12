@@ -61,6 +61,9 @@ class Candidate(models.Model):
     fullname = models.CharField(default="",max_length=24)
     rollnumber = models.CharField(default="",max_length=20)
     college = models.CharField(default="",max_length=50)
+    
+    tenth_percentage = models.IntegerField(default=0,max_length=50)
+    twelveth_percentage = models.CharField(default=0,max_length=50)
     test_name = models.ForeignKey(Challenge,on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
     submitted_code = models.TextField(max_length=10000)
