@@ -27,13 +27,13 @@
         </div>
     </div>
     <div class="card-body">
-        <form style="max-width:350px; margin: auto;" method='POST'>
+        <form style="max-width: fit-content;min-width: 350px;margin: auto;" method='POST'>
             {% csrf_token %}
             <fieldset>
                 {{form.email | as_crispy_field}} {{form.username | as_crispy_field}} {{form.fullname|as_crispy_field}}   {{form.password1 | as_crispy_field}} {{form.password2 | as_crispy_field}}
                 <div class="form-group">
 
-                    <button type="submit" class="btn btn-primary" style="margin-left: 67%;">Register</button>
+                    <button type="submit" class="btn btn-primary" >Register</button>
                     {% comment %} <small style="max-width:fit-content;margin:auto; padding: 10px;">Already have an account? <a href="{% url 'login' %}">Sign in</small> {% endcomment %}
                 </div>
 

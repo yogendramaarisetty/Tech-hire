@@ -10717,3 +10717,18 @@ img.form-brand {
     font-weight: bold;
     letter-spacing: 1px;
 }
+#form {
+  
+    max-width: max-content;
+    min-width: 300px;
+}
+button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    padding-right: 25px;
+    padding-left: 25px;
+    width: 100%;
+    height: 40px;
+}
