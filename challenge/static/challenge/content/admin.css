@@ -394,3 +394,9 @@ h1 {
     border-color: transparent;
     background-color: currentColor;
 }
+img.navbar-brand {
+    position: absolute;
+    max-width: 23px;
+    left: 10px;
+    top: 8px;
+}
