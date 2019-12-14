@@ -61,13 +61,16 @@ class Candidate(models.Model):
     fullname = models.CharField(default="",max_length=24)
     rollnumber = models.CharField(default="",max_length=20)
     college = models.CharField(default="",max_length=50)
-    
-    tenth_percentage = models.IntegerField(default=0,max_length=50)
-    twelveth_percentage = models.CharField(default=0,max_length=50)
+    graduation_year = models.IntegerField(default=0)
+    branch = models.CharField(default=0,max_length=50)
+    mobile_number = models.CharField(max_length=100)
     test_name = models.ForeignKey(Challenge,on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
     submitted_code = models.TextField(max_length=10000)
     total_score = models.IntegerField(default=0)
+    start_time = models.DateTimeField(default=timezone.now(), auto_now=False, auto_now_add=False)
+    end_time = models.DateTimeField(default=timezone.now(), auto_now=False, auto_now_add=False)
+    resume = models.FileField(default='default.pdf',upload_to='resumes',null=True)
 
     def __str__(self):
         return f'{self.user.username}'

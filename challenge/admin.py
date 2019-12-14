@@ -73,6 +73,11 @@ class CandidateAdmin(admin.ModelAdmin):
         'rollnumber',
         'test_name',
         'college',
+        'branch',
+        'graduation_year',
+        'mobile_number',
+        'total_score',
+        'resume',
     )
     fieldsets = (
         (None, {
@@ -81,7 +86,12 @@ class CandidateAdmin(admin.ModelAdmin):
                   'fullname',
                   'rollnumber',
                   'college',
+                  'branch',
+                  'graduation_year',
+                  'mobile_number',
                   'test_name',
+                  'total_score',
+                  'resume',
             ),
         }),
     )

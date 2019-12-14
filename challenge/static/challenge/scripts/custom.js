@@ -1,3 +1,5 @@
+/** @format */
+
 $(window).load(function() {
-    $('#loading').fadeOut("slow");
- });
+  $("#loading").fadeOut("slow");
+});

@@ -18,6 +18,7 @@ urlpatterns = [
     path('submitted/',auth_views.LogoutView.as_view(template_name="challenge/home.html"),name="logout"),
     path('tests/',views.challenges,name='tests'),
     path('index/',views.index,name='index'),
+    url(r'^candidate_form/testInstruction/$', views.test_instruction, name='test_instruction'),
     url(r'^candidate_form/(?P<challenge_id>\d+)/$', views.candidate_form, name='candidate_form'),
     path('login/',auth_views.LoginView.as_view(template_name="challenge/login.html"),name="login"),
 ]

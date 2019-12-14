@@ -69,7 +69,7 @@ TEMPLATES = [
         },
     },
 ]
-
+AUTH_USER_EMAIL_UNIQUE = True
 WSGI_APPLICATION = 'django_project.wsgi.application'
 
 

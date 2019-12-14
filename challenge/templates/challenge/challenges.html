@@ -1,25 +1,8 @@
-{% extends "challenge/base.html" %} {% block content %} 
+{% extends "challenge/base.html" %} {% block content %}
 {% if user.is_authenticated %}
 <div class="row mt-3">
     <div class="col-lg-3 col-md-6">
-        {% comment %} <div class="sidebar">
-            <div class="card bg-light mb-3" style="max-width: 20rem;">
-                <div class="card-header">Our Sidebar</div>
-                <div class="card-body">
-                    <div class="list-group">
-                        <a href="#" class="list-group-item list-group-item-action">
-                                Latest posts
-                            </a>
-                        <a href="#" class="list-group-item list-group-item-action">Announcements
-                            </a>
-                        <a href="#" class="list-group-item list-group-item-action">Calender
-                            </a>
-                        <a href="#" class="list-group-item list-group-item-action ">etc
-                            </a>
-                    </div>
-                </div>
-            </div>
-        </div> {% endcomment %}
+
     </div>
     <div class="col-lg-6 col-md-6">
         <div class="posts">
@@ -31,8 +14,11 @@
                     <small>{{i.Date}}</small>
                 </div>
                 <div class="card-body">
-                  <pre>{{i.Description}}</pre>
-                <a  href="{% url 'candidate_form' challenge_id=i.id %}"><button type="button" class="btn btn-outline-success">start</button></a>
+                    <pre>{{i.Description}}</pre>
+                    <a href="{% url 'candidate_form' challenge_id=i.id  %}">
+                    <button type="button" class="btn btn-outline-success">start</button>
+                    </a>
+                    
                 </div>
             </div>
             {% endfor %}
@@ -40,13 +26,13 @@
     </div>
 </div>
 {% else %}
-<div class="row mt-3">	
-  
-<div class="col-lg-4 col-md-6">
-<div class="mb-2 alert alert-info" role="alert">
-<h4>Please Register to take the test</h4>
-<p>Click here to <a href="{% url 'challenge_register' %}">Register</a>
-</div>
-</div>
+<div class="row mt-3">
+
+    <div class="col-lg-4 col-md-6">
+        <div class="mb-2 alert alert-info" role="alert">
+            <h4>Please Register to take the test</h4>
+            <p>Click here to <a href="{% url 'challenge_register' %}">Register</a>
+        </div>
+    </div>
 </div>
 {% endif %} {% endblock content %}

@@ -1,0 +1,21 @@
+<!-- @format -->
+
+{% extends "challenge/base.html" %}
+{% block content %}
+{% load static %}
+
+<div class="row mt-3">
+  <div class="col-lg-4 col-md-6">
+    <div class="mb-2 alert alert-primary" role="alert">
+      You have Already filled the details. You can now proceed to test
+      {{challenge.Title}}
+    </div>
+    <a href="{% url 'test_instruction' id=challenge.id %}">
+      <button type="button" class="btn btn-outline-success">Proceed
+      <img class="form-brand-details" src="{% static 'img/arrow_icon.svg' %}" />
+    </button>
+                   
+    </a>
+  </div>
+</div>
+{% endblock %}

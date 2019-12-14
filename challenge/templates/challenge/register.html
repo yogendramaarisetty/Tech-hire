@@ -1,4 +1,18 @@
-{% extends "challenge/base.html" %} {% block content %} {% load crispy_forms_tags %}{% load static %}
+{% extends "challenge/base.html" %}
+ {% block content %} 
+ {% load crispy_forms_tags %}
+ {% load static %}
+ {% if user.is_authenticated %}
+ <div class="row mt-3">	
+  
+<div class="col-lg-4 col-md-6">
+<div class="mb-2 alert alert-success" role="alert">	
+Hey you are already registered for the test You can now go to available Tests and
+  <a href="{% url 'tests'%}"><strong>Access the tests.</strong></a>
+  </div>
+  </div>
+  </div>
+ {% else %}
 <br>
 <div id="form" class="card bg-light mb-3" style="margin:auto;">
     <div class="card-header">
@@ -30,7 +44,7 @@
         <form style="max-width: fit-content;min-width: 350px;margin: auto;" method='POST'>
             {% csrf_token %}
             <fieldset>
-                {{form.email | as_crispy_field}} {{form.username | as_crispy_field}} {{form.fullname|as_crispy_field}}   {{form.password1 | as_crispy_field}} {{form.password2 | as_crispy_field}}
+                {{form.email | as_crispy_field}} {{form.username | as_crispy_field}}  {{form.password1 | as_crispy_field}} {{form.password2 | as_crispy_field}}
                 <div class="form-group">
 
                     <button type="submit" class="btn btn-primary" >Register</button>
@@ -41,8 +55,10 @@
             </fieldset>
         </form>
     </div>
+</div>
 
 
+ {% endif %}
 
 
     {% endblock content %}
