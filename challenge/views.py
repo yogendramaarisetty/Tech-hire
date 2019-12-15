@@ -28,8 +28,8 @@ def home(request):
 'header':'Host Analytics Exam Platform',
 'title':'HA Exam',
 })
-def index(request):
-    return render(request,'challenge/testpage.html')
+def testpage(request,challenge_id,u_id):
+    return render(request,'challenge/testpage.html',{'timer':'time'})
 def challenges(request):
     print(request.user.username)
     context ={

@@ -29,9 +29,12 @@
 
                 </ul>
             </p>
+            <a href="{% url 'testpage' challenge_id=challenge.id  u_id=user.id %}">
             <button type="button" class="btn btn-outline-success">Proceed
                 <img class="form-brand-details" src="{% static 'img/arrow_icon.svg' %}" />
+              
               </button>
+                </a>
         </div>
         
     </div>
