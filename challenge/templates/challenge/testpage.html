@@ -1,0 +1,16 @@
+<!-- @format -->
+
+{% extends "challenge/base.html" %} {% block content %}
+{% if user.is_authenticated %} {% load crispy_forms_tags %} {% load static %}
+
+<div class="container-fluid">
+<div class="sidebar">
+  <div class="sidebar-top"></div>
+  <div class="sidebar-bottom">
+      <div class="question-list-element">1. question</div>
+      <div class="question-list-element">2. question</div>
+      <div class="question-list-element">3. question</div>
+  </div>
+</div>
+</div>
+{% endif %} {% endblock content%}

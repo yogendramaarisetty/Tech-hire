@@ -16,10 +16,23 @@
     <link rel="stylesheet" type="text/css" href="{% static 'challenge/content/bootstrap.css' %}" />
     <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{% static 'challenge/content/bootstrap-grid.css' %}" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        #resizable {
+            width: 150px;
+            height: 150px;
+            padding: 0.5em;
+        }
+
+        #resizable h3 {
+            text-align: center;
+            margin: 0;
+        }
+    </style>
     <script src="{% static 'challenge/scripts/jquery.js' %}"></script>
     <script src="{% static 'challenge/scripts/bootstrap.min.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+    
 
     <script src="{% static 'challenge/scripts/custom.js' %}"></script>
 </head>
@@ -28,23 +41,25 @@
     <div id="loading">
         <img id="loading-image" src="{% static 'challenge/Preloader_2.gif' %}" alt="Loading..." />
     </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <button class="navbar-toggler hidden-lg-up float-xs-right" type="button" data-toggle="collapse"
             data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false"
             aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <img class="navbar-brand" src="{% static 'img/logo.png' %}" style="width:auto;height:auto;" />
+
         {%if header%}
-        <a class="navbar-brand" href="{% url 'home'%}">{{header}}</a>
+        <a class="navbar-brand" href="{% url 'home'%}"> <img class="navbar-brand" src="{% static 'img/logo.png' %}"
+                style="width:auto;height:auto;" />{{header}}</a>
         {% else %}
-        <a class="navbar-brand" href="{% url 'home'%}">TECH HIRE Hiring Platform</a>
+        <a class="navbar-brand" href="{% url 'home'%}"> <img class="navbar-brand" src="{% static 'img/logo.png' %}"
+                style="width:auto;height:auto;" />TECH Hire Platform</a>
         {% endif %}
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-md-0">
                 <li class="nav-item active">
                     {% if user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'tests' %}">CHALLENGES</a>
+                    <a class="nav-link" href="{% url 'tests' %}">Challenges</a>
                     {%endif%}
                 </li>
             </ul>
@@ -60,7 +75,7 @@
                     </li>
                     <li class="nav-item">
                         {% if user.is_authenticated %}
-                        <a class="nav-link" href="{% url 'logout' %}">Logout</a> {% else %} 
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a> {% else %}
                         <a class="nav-link" href="{% url 'login' %}">Login</a> {% endif %}
                     </li>
                 </ul>
@@ -68,9 +83,11 @@
         </div>
     </nav>
 
-    <div class="container-fluid">
+  
+       <div class="container-fluid">
         {% block content%} {% endblock %}
     </div>
+    
 </body>
 
 </html>

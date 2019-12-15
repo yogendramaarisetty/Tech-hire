@@ -92,6 +92,8 @@ class CandidateAdmin(admin.ModelAdmin):
                   'test_name',
                   'total_score',
                   'resume',
+                  'start_time',
+                  'end_time',
             ),
         }),
     )

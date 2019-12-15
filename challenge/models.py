@@ -57,7 +57,7 @@ class testcases(models.Model):
 
 class Candidate(models.Model):
     
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     fullname = models.CharField(default="",max_length=24)
     rollnumber = models.CharField(default="",max_length=20)
     college = models.CharField(default="",max_length=50)
@@ -68,8 +68,8 @@ class Candidate(models.Model):
     status = models.BooleanField(default=False)
     submitted_code = models.TextField(max_length=10000)
     total_score = models.IntegerField(default=0)
-    start_time = models.DateTimeField(default=timezone.now(), auto_now=False, auto_now_add=False)
-    end_time = models.DateTimeField(default=timezone.now(), auto_now=False, auto_now_add=False)
+    start_time = models.DateTimeField(blank=True,null=True,auto_now=False, auto_now_add=False)
+    end_time = models.DateTimeField(blank=True,null=True,auto_now=False, auto_now_add=False)
     resume = models.FileField(default='default.pdf',upload_to='resumes',null=True)
 
     def __str__(self):

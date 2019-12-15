@@ -29,7 +29,7 @@ def home(request):
 'title':'HA Exam',
 })
 def index(request):
-    return render(request,'challenge/index.html')
+    return render(request,'challenge/testpage.html')
 def challenges(request):
     print(request.user.username)
     context ={
@@ -37,22 +37,22 @@ def challenges(request):
     }
     return render(request,'challenge/challenges.html',context)
 
-def test_instruction(request):
-    challenge = request.user.candidate.test_name
+def test_instruction(request,pk):
+    challenge = Challenge.objects.get(pk=pk)
     return render(request,'challenge/test_instruction.html',{'challenge':challenge})
 
 def candidate_form(request,challenge_id):
-    test = None
-    if Candidate.objects.all().filter(user=request.user).first() is None:
+    test = Challenge.objects.get(pk=challenge_id)
+    candidate = Candidate.objects.filter(user=request.user)
+    if candidate.filter(test_name= test).first() is None:
         print("this is none")
         if request.method == "POST":
             form= CandidateDetailsForm(request.POST,request.FILES)
             if form.is_valid():
                 form.instance.user = request.user
-                test = Challenge.objects.get(pk=challenge_id)
                 form.instance.test_name = test
                 form.save()
-                return redirect('test_instruction')     
+                return redirect('test_instruction',pk=challenge_id)     
         else:
             form= CandidateDetailsForm()
         return render(request,'challenge/candidate_details.html',
@@ -62,7 +62,7 @@ def candidate_form(request,challenge_id):
                                     'header':'Host Analytics Exam'
                         })
     else:
-        return redirect('test_instruction')
+        return redirect('test_instruction',pk=challenge_id)
     
    
         
