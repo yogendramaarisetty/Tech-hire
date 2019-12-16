@@ -11036,3 +11036,15 @@ li.snav-item:hover {
     background: white;
     color: black;
 }
+.content {
+    padding: 10px 45px 10px 45px;
+    flex: 1;
+    position: relative;
+    background-color: #cecece0d;
+    height: 90%;
+    width: 82%;
+    margin-left: auto;
+    margin-top: 50px;
+    overflow-y: hidden;
+}
+/*zXXXXXXxhhzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz*/

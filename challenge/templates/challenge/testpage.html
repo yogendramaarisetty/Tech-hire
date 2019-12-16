@@ -1,19 +1,92 @@
 <!-- @format -->
 
-{% extends "challenge/base.html" %} {% block content %}
-{% if user.is_authenticated %} {% load crispy_forms_tags %} {% load static %}
+{% extends "challenge/base.html" %}
+ {% block content %}
+ {% if user.is_authenticated %}
+  {% load crispy_forms_tags %}
+   {% load static %}
+{%block head%}
+<head>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+{% with questions|first as question %}
+$(window).load(function() {
+  $("#{{question.id}}").click();
+});
+{% endwith %}
+function openCity(evt, questionName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(questionName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+
+  </head>
+{%endblock%}
 
 <div class="row">
-    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-      <div class="sidebar-sticky">
-        <ul class="nav flex-column">
-          <li class="snav-item"><a class="nav-link " href="#">1. Question</a></li>
-          <li class="snav-item"><a class="nav-link " href="#">2. Question</a></li>
-          <li class="snav-item"><a class="nav-link " href="#">3. Question</a></li>
-          <li class="snav-item"><a class="nav-link " href="#">4. Question</a></li>
-          <li class="snav-item"><a class="nav-link " href="#">5. Question</a></li>
-        </ul>
+  <nav class="sidebar">
+    <div class="sidebar-content">
+      <div class="scrollbar-container ps">
+        <a class="sidebar-brand" href="#">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="align-middle text-primary"
+          >
+            <path
+              d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+            ></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+        </svg>
+        <span class="align-middle">{{ challenge.Title }}</span></a>
+        <ul class="sidebar-nav">
+          <li class="sidebar-header">Questions</li>
+        {% for q in questions %}
+           <li  class="tablinks" id="{{q.id}}" onclick="openCity(event, '{{q.Title}}')">
+            <span
+              data-toggle="collapse"
+              class="sidebar-link collapsed"
+              aria-expanded="false">
+              <span class="align-middle">{{ forloop.counter }}. {{q.Title}}</span>
+          </li></a>
+        {% endfor %}
+        
+        </div>
       </div>
-    </nav>
+    </div>
+  </nav>
+
 </div>
-{% endif %} {% endblock content%}
+<div class="content">
+{% for q in questions %}
+<div id="{{q.Title}}" class="tabcontent">
+  <h3>{{q.Title}}</h3>
+  <pre>{{q.Description}}</pre>
+</div>
+{% endfor %}
+
+</div><div class="p-0 container-fluid">
+</div>
+</div>
+{% else %}
+{% endif %}
+ {% endblock content%}

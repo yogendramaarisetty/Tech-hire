@@ -40,7 +40,7 @@ class InLineTestcases(admin.TabularInline):
     extra = 0
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [InLineTestcases]
-    list_display=('Title','Slug','Type','combine_title_slug')
+    list_display=('Title','Slug','Type','combine_title_slug','challenge')
     list_display_links = ('Title',
                         'Slug')
     list_filter = ('Title', 'Type',
@@ -94,6 +94,7 @@ class CandidateAdmin(admin.ModelAdmin):
                   'resume',
                   'start_time',
                   'end_time',
+                  'count',
             ),
         }),
     )

@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from .forms import UserRegisterForm,CandidateDetailsForm
-from .models import Candidate,Challenge
+from .models import Candidate,Challenge,Question
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -21,6 +21,7 @@ from django.http import HttpResponse
 import json,time
 import smtplib
 from django.db.models import Q
+from django.utils import timezone
 def home(request):
     if request.user.is_authenticated:
         return redirect('tests')
@@ -29,7 +30,13 @@ def home(request):
 'title':'HA Exam',
 })
 def testpage(request,challenge_id,u_id):
-    return render(request,'challenge/testpage.html',{'timer':'time'})
+    challenge = Challenge.objects.get(pk=challenge_id)
+    candidate = Candidate.objects.filter(test_name=challenge).first()
+    questions = Question.objects.filter(challenge=challenge)
+    candidate.count+=1
+    if candidate.count<=1:
+        candidate.start_time=timezone.now()
+    return render(request,'challenge/testpage.html',{'challenge':challenge,'questions':questions})
 def challenges(request):
     print(request.user.username)
     context ={

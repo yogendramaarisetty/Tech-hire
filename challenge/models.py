@@ -68,6 +68,7 @@ class Candidate(models.Model):
     status = models.BooleanField(default=False)
     submitted_code = models.TextField(max_length=10000)
     total_score = models.IntegerField(default=0)
+    count= models.IntegerField(default=0,max_length=3)
     start_time = models.DateTimeField(blank=True,null=True,auto_now=False, auto_now_add=False)
     end_time = models.DateTimeField(blank=True,null=True,auto_now=False, auto_now_add=False)
     resume = models.FileField(default='default.pdf',upload_to='resumes',null=True)

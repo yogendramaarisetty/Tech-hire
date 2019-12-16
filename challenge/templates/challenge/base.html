@@ -16,26 +16,15 @@
      <link href="https://fonts.googleapis.com/css?family=Hind&display=swap" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="{% static 'challenge/content/bootstrap-grid.css' %}" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'challenge/content/custom.css' %}" />
     <link rel="stylesheet" type="text/css" href="{% static 'challenge/content/bootstrap.css' %}" />
    
-    <style>
-        #resizable {
-            width: 150px;
-            height: 150px;
-            padding: 0.5em;
-        }
-
-        #resizable h3 {
-            text-align: center;
-            margin: 0;
-        }
-    </style>
     <script src="{% static 'challenge/scripts/jquery.js' %}"></script>
     <script src="{% static 'challenge/scripts/bootstrap.min.js' %}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    
-
     <script src="{% static 'challenge/scripts/custom.js' %}"></script>
+    {%block head%}
+    {% endblock %}
 </head>
 
 <body>
@@ -69,7 +58,7 @@
             </ul>
             {% if timer %}
                <div class="nav-timer">Timer</div>
-                {% endif %}
+            {% endif %}
             
             <form class="form-inline my-2 my-lg-0">
                 <ul class="navbar-nav mr-auto">
