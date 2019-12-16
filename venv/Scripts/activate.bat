@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=C:\repository\django_project\venv"
+set "VIRTUAL_ENV=C:\Anonymous\blogapp\venv"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"
