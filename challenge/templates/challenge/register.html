@@ -45,7 +45,7 @@ Hey you are already registered for the test You can now go to available Tests an
             {% csrf_token %}
             <fieldset>
                 {{form.email | as_crispy_field}} {{form.username | as_crispy_field}}  {{form.password1 | as_crispy_field}} {{form.password2 | as_crispy_field}}
-                <div class="form-group">
+                <div class="form-groupbtn">
 
                     <button type="submit" class="btn btn-primary" >Register</button>
                     {% comment %} <small style="max-width:fit-content;margin:auto; padding: 10px;">Already have an account? <a href="{% url 'login' %}">Sign in</small> {% endcomment %}

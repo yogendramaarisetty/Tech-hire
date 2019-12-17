@@ -95,11 +95,7 @@ def challenge_register(request):
     else:
         form = UserRegisterForm()
     return render(request,'challenge/register.html',
-    {'form':form},
-    {
-        'title':'Host Analytics Hiring',
-        'header':'Host Analytics Exam'
-    })
+    {'form':form},)
 
 def account_activation_sent(request):
     return render(request, 'challenge/account_activation_sent.html')

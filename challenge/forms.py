@@ -21,7 +21,7 @@ class UserRegisterForm(UserCreationForm) :
         email = self.cleaned_data.get('email')
         username = self.cleaned_data.get('username')
         if email and User.objects.filter(email=email).exclude(username=username).exists():
-            raise forms.ValidationError(u'User with this Email Id already Exists')
+            raise forms.ValidationError(u'User with this Email Id already Registered')
         return email
 class CandidateDetailsForm(forms.ModelForm):
     fullname = forms.CharField(label="Full Name",help_text="Please enter yor fullname as per your govt. Id or college Id")
