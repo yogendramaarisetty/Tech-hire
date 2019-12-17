@@ -33,9 +33,12 @@ def testpage(request,challenge_id,u_id):
     challenge = Challenge.objects.get(pk=challenge_id)
     candidate = Candidate.objects.filter(test_name=challenge).first()
     questions = Question.objects.filter(challenge=challenge)
-    candidate.count+=1
+    c= candidate.count
+    candidate.count = c+1
+    candidate.save()
     if candidate.count<=1:
         candidate.start_time=timezone.now()
+        candidate.save()
     return render(request,'challenge/testpage.html',{'challenge':challenge,'questions':questions})
 def challenges(request):
     print(request.user.username)
@@ -63,18 +66,10 @@ def candidate_form(request,challenge_id):
         else:
             form= CandidateDetailsForm()
         return render(request,'challenge/candidate_details.html',
-                                {'form':form},
-                                {
-                                    'title':'Host Analytics Hiring',
-                                    'header':'Host Analytics Exam'
-                        })
+                                {'form':form}
+                                )
     else:
         return redirect('test_instruction',pk=challenge_id)
-    
-   
-        
-
-    return render(request,'challenge/candidate_form.html',{'challenge_id':challenge_id})
 
 def challenge_register(request):
     if request.method == "POST":
