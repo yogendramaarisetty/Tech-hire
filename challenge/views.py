@@ -11,7 +11,7 @@ from django.shortcuts import render, redirect
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
-from datetime import datetime
+from datetime import datetime,timedelta
 from django.http import HttpRequest
 from django.views.generic import CreateView
 from django.contrib.auth import authenticate
@@ -37,9 +37,11 @@ def testpage(request,challenge_id,u_id):
     candidate.count = c+1
     candidate.save()
     if candidate.count<=1:
-        candidate.start_time=timezone.now()
+        candidate.start_time=datetime.now()
+        candidate.end_time=datetime.now()+timedelta(minutes=120)
         candidate.save()
-    return render(request,'challenge/testpage.html',{'challenge':challenge,'questions':questions})
+    return render(request,'challenge/testpage.html',{'challenge':challenge,'questions':questions,'candidate':candidate})
+
 def challenges(request):
     print(request.user.username)
     context ={
