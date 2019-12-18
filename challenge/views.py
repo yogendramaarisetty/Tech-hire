@@ -29,18 +29,7 @@ def home(request):
 'header':'Host Analytics Exam Platform',
 'title':'HA Exam',
 })
-def testpage(request,challenge_id,u_id):
-    challenge = Challenge.objects.get(pk=challenge_id)
-    candidate = Candidate.objects.filter(test_name=challenge).first()
-    questions = Question.objects.filter(challenge=challenge)
-    c= candidate.count
-    candidate.count = c+1
-    candidate.save()
-    if candidate.count<=1:
-        candidate.start_time=datetime.now()
-        candidate.end_time=datetime.now()+timedelta(minutes=120)
-        candidate.save()
-    return render(request,'challenge/testpage.html',{'challenge':challenge,'questions':questions,'candidate':candidate})
+
 
 def challenges(request):
     print(request.user.username)
@@ -131,3 +120,29 @@ def send_email(subject, msg, user):
         print("Success: Email sent!")
     except:
         print("Email failed to send.")
+
+def testpage(request,challenge_id,u_id):
+    if request.is_ajax() and request.method == "POST" :
+        compile_run(request)
+        res={'msg':'this is working'}
+        return HttpResponse(json.dumps(res), content_type="application/json")
+
+    challenge = Challenge.objects.get(pk=challenge_id)
+    candidate = Candidate.objects.filter(test_name=challenge).first()
+    questions = Question.objects.filter(challenge=challenge)
+    c= candidate.count
+    candidate.count = c+1
+    candidate.save()
+    if candidate.count<=1:
+        candidate.start_time=datetime.now()
+        candidate.end_time=datetime.now()+timedelta(minutes=120)
+        candidate.save()
+    return render(request,'challenge/testpage.html',{'challenge':challenge,'questions':questions,'candidate':candidate})
+
+def compile_run(request):
+    
+    print('****** AJAX**********',)
+    c = request.POST.get('code')
+    l = request.POST.get('language_id')
+    i = request.POST.get('input')
+    print(c,l,i)

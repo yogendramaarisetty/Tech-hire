@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^candidate_form/testInstruction/(?P<pk>\d+)/$', views.test_instruction, name='test_instruction'),
     url(r'^candidate_form/(?P<challenge_id>\d+)/$', views.candidate_form, name='candidate_form'),
     path('login/',auth_views.LoginView.as_view(template_name="challenge/login.html"),name="login"),
+    path(r'challenge/testpage/(?P<challenge_id>\d+)/(?P<u_id>\d+)/compile_run/',views.compile_run,name='compile_run')
 ]

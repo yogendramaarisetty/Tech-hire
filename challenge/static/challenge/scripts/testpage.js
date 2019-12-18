@@ -1,11 +1,25 @@
+window.define = window.define || ace.define;
 var lang = "Java"
-var e = ace.edit("codeeditor")
-e.getSession().setMode("ace/mode/java");
-e.setFontSize("15px");
+ace.require("ace/ext/language_tools");
+    var editor = ace.edit("codeeditor");
+    editor.session.setMode("ace/mode/c_cpp");
+    editor.setTheme("ace/theme/monokai");
+    editor.setFontSize("15px");
+    editor.renderer.setScrollMargin(10, 10);
+    // enable autocompletion and snippets
+    editor.setOptions({
+        enableBasicAutocompletion: true,
+        enableSnippets: true,
+        enableLiveAutocompletion: true,
+    });
+alert(u_id);
+    $(window).load(function() {
+        var u_id
 
-e.setTheme("ace/theme/monokai")
-
-
+        console.log(u_id);
+console.log(c_id);
+console.log(u); });
+    
 // Set the date we're counting down to
 var countDownDate = new Date(end_time).getTime();
 
@@ -43,41 +57,31 @@ function openQuestion(evt, questionName) {
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
-        tablinks[i].className = tablinks[i].className.replace(" active", "");
+        // tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(questionName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+function selectLang() {
+    lang = document.getElementById("language").value;
+    if (lang == "Java") {
+        editor.getSession().setMode("ace/mode/java");
+        editor.setValue("Java");
+    }
+    else if (lang == "C" || lang == "C++" ) {
+        editor.getSession().setMode("ace/mode/c_cpp");
+        editor.setValue("#include");
+    }
+    else if(lang == "C#"){
+        editor.getSession().setMode("ace/mode/csharp");
+        editor.setValue("import");
+    }
+    else if(lang=="Python"){
+        editor.getSession().setMode("ace/mode/python");
+        editor.setValue("def new():");
 
-function runCode() {
-    if (e.getValue() != "") {
-        $('.loader').show();
-        var ajaxMins = new Date().getMinutes();
-        var ajaxSecs = new Date().getSeconds();
-        var ajaxMS = new Date().getMilliseconds();
-        $.ajax({
-            type: 'POST',
-            url: 'compile_run/',
-            dataType: 'json',
-            cache: false,
-            async: true,
-            data: {
-                csrfmiddlewaretoken: '{{ csrf_token }}',
-                code: e.getValue(),
-                input: $('#input').val(),
-                language_id: document.getElementById("language").value,
-            },
-            success: function(json) {
-                $('.loader').hide();
-                $('#output').html(json.msg);
-            }
-        }).done(function() {
-            var ajaxMins2 = new Date().getMinutes() - ajaxMins;
-            var ajaxSecs2 = (new Date().getSeconds() % 60) - ajaxSecs;
-            var ajaxMS2 = new Date().getMilliseconds() - ajaxMS;
-            console.log(ajaxSecs2, " seconds");
-        });
-    } else {
-        $('#output').html("Don't submit empty code");
     }
 }
+
+
+
