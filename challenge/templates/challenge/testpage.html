@@ -74,13 +74,23 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
   {% for q in questions %}
   <div id="{{q.Title}}" class="tabcontent">
     <h3>{{q.Title}}</h3>
-    <div class="question-content">{{q.Description}}</div>
+    <div class="question-content">{{q.Description}}<br>
+    <strong>Sample Input</strong>
+    <div class="sample-input">{{q.sample_inputs}}</div>
+    <strong>Sample Output</strong>
+    <div class="sample-input">{{q.sample_outputs}}</div>
+    </div>
   </div>
   {% endfor %}
 </div>
 <div class="compiler-container">
 <div class='code-editor' id='codeeditor'></div>
+<div class="control">
+<textarea></textarea>
+<textarea></textarea>
 </div>
+</div>
+
 </div>
 {% else %}
 {% endif %}
