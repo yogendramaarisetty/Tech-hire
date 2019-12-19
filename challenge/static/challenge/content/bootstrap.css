@@ -11182,9 +11182,9 @@ div#demo {
     position: relative;
     background-color: #cecece0d;
     height: auto;
-    width: 82%;
+    width: 82.5%;
     margin-left: auto;
-    margin-top: 50px;
+    margin-top: 30px;
     box-shadow: 0 1px 4px 0 rgba(32, 33, 36, 0.28);
     overflow-y: hidden;
     background: white;
@@ -11361,9 +11361,7 @@ div#demo {
     padding: 1px;
 }
 
-label {
-    color: aliceblue;
-}
+
 
 form#codeform {
     display: flex;
@@ -11425,4 +11423,17 @@ button.btn.dropdown-toggle.btn-light {
 .btn-primary-dark:hover {
     background-color: #0059b9;
     color: #fff;
+}
+.form-group-dark.purple-border {
+    color: aliceblue;
+}
+div#name {
+    color: aliceblue;
+    margin: auto;
+    letter-spacing: 0.5px;
+    margin-right: 20px;
+}
+li.nav-item {
+    height: fit-content;
+    margin: auto;
 }

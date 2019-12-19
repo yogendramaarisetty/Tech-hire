@@ -138,19 +138,20 @@ def testpage(request,challenge_id,u_id):
             candidate_code.save()
     
     if request.is_ajax() and request.method == "POST" :
+        code_output=""
+        if request.POST.get('compile_run') == 'yes':
+            code_output = save_run(request,candidate_codes_obj)
+            res={'msg':code_output}
+            return HttpResponse(json.dumps(res), content_type="application/json")
         if request.POST.get('question') == 'yes':
             q_id = request.POST.get('q_id')
             question = Question.objects.get(pk=q_id)
             candidate_question_code =""
+            candidate_codes_obj = Candidate_codes.objects.filter(candidate=candidate)
             for i in candidate_codes_obj:
                 if i.question.id is question.id:
                     candidate_question_code = i
-            return question_codes(candidate_question_code)
-        code_output=""
-        if request.POST.get('compile_run') == 'yes':
-            code_output = save_run(request,candidate_codes_obj)
-        res={'msg':code_output}
-        return HttpResponse(json.dumps(res), content_type="application/json")
+            return question_codes(candidate_question_code)    
     return render(request,'challenge/testpage.html',{'challenge':challenge,'questions':questions,'candidate':candidate,'candidate_codes':candidate_codes_obj,})
 
 def save_run(request,candidate_codes_obj):
@@ -170,6 +171,7 @@ def save_codes(candidate_codes_obj,code,language,question):
         if i.question.id is question.id:
             candidate_question_code = i
             break    
+    print("saving question")
     if language == "Python":
         candidate_question_code.python_code=code
         candidate_question_code.save()
@@ -194,4 +196,5 @@ def question_codes(candidate_question_code):
         'cpp':candidate_question_code.cpp_code,
         'c':candidate_question_code.c_code,
     }
+    print(codes)
     return HttpResponse(json.dumps(codes), content_type="application/json")

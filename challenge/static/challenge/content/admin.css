@@ -74,9 +74,8 @@ table {
 }
 
 body {
-    background-color: #d9d9d9;
+    background-color: #f7f7f7ad;
     font-family: 'Hind', sans-serif;
-    ;
 }
 
 div.breadcrumbs {
@@ -399,4 +398,8 @@ img.navbar-brand {
     max-width: 23px;
     left: 10px;
     top: 8px;
+}
+tr {
+    box-shadow: -1px 2px 3px 0px rgb(248, 248, 248);
+    background: rgb(255, 255, 255);
 }

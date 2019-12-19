@@ -62,12 +62,13 @@ def execute_java(code,custom_input,file_name,path):
     for l in file_lines:
         code_file.write(l+"\n")
     code_file.close()
-    cmd = f'g++ {file_name_ext}'
+    cmd = f'javac {file_name_ext}'
     p=os.getcwd()
     compile_code = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,shell=True)
     errors = compile_code.stderr.readlines()
+    cmd='java MyClass'
     if len(errors)==0:
-        run_code = subprocess.run("a", stdout=PIPE,input=custom_input, stderr=subprocess.PIPE,encoding='ascii',shell=True)
+        run_code = subprocess.run(cmd, stdout=PIPE,input=custom_input, stderr=subprocess.PIPE,encoding='ascii',shell=True)
         os.chdir(root_path)
         return run_code.stdout
     else:
