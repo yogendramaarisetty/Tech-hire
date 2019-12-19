@@ -55,7 +55,7 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
         <ul class="sidebar-nav">
           <li class="sidebar-header">Questions</li>
         {% for q in questions %}
-           <li  class="tablinks" id="{{q.id}}" onclick="openQuestion(event, '{{q.Title}}')">
+           <li  class="tablinks" id="{{q.id}}" onclick="openQuestion(event, '{{q.Title}}','{{q.id}}')">
             <span
               data-toggle="collapse"
               class="sidebar-link collapsed"
@@ -122,9 +122,86 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
 {% endif %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7/ace.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7/ext-language_tools.js"></script>
+
 <script>
-var uid = {{user.id}};
-var cid = {{challenge.id}};
+$(window).load(function() {
+  selectLang();
+})
+var lang = "Java";
+ace.require("ace/ext/language_tools");
+var editor = ace.edit("codeeditor");
+editor.session.setMode("ace/mode/c_cpp");
+editor.setTheme("ace/theme/monokai");
+editor.setFontSize("15px");
+editor.renderer.setScrollMargin(10, 10);
+// enable autocompletion and snippets
+editor.setOptions({
+    enableBasicAutocompletion: true,
+    enableSnippets: true,
+    enableLiveAutocompletion: true,
+});
+var java_code;
+var c_code;
+var cpp_code;
+var python_code;
+var csharp_code;
+
+function openQuestion(evt, questionName, q_id) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    document.getElementById(questionName).style.display = "block";
+
+    $.ajax({
+            type: 'POST',
+            url: '',
+            dataType: 'json',
+            cache: false,
+            async: true,
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                question:'yes',
+                q_id: q_id,
+            },
+            success: function(json) {
+                $('.loader').hide();
+                java_code=json.java;
+                python_code=json.python;
+                c_code=json.c;
+                csharp_code=json.csharp;
+                cpp_code=json.cpp;
+            }
+        }).done(function() {
+            var ajaxMins2 = new Date().getMinutes() - ajaxMins;
+            var ajaxSecs2 = (new Date().getSeconds() % 60) - ajaxSecs;
+            var ajaxMS2 = new Date().getMilliseconds() - ajaxMS;
+            console.log(ajaxSecs2, " seconds");
+        });
+}
+function selectLang() {
+    lang = document.getElementById("language").value;
+    if (lang == "Java") {
+        editor.getSession().setMode("ace/mode/java");
+        editor.setValue(java_code);
+    } else if (lang == "C" ) {
+        editor.getSession().setMode("ace/mode/c_cpp");
+        editor.setValue(c_code);
+    }
+      else if(lang == "C++"){
+        editor.getSession().setMode("ace/mode/c_cpp");
+        editor.setValue(cpp_code);
+      } 
+    else if (lang == "C#") {
+        editor.getSession().setMode("ace/mode/csharp");
+        editor.setValue(csharp_code);
+    } else if (lang == "Python") {
+        editor.getSession().setMode("ace/mode/python");
+        editor.setValue(python_code);
+
+    }
+}
 function runCode() {
 
     if (editor.getValue() != "") {
@@ -140,6 +217,7 @@ function runCode() {
             async: true,
             data: {
                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                compile_run: 'yes',
                 code: editor.getValue(),
                 input: $('#input').val(),
                 language_id: document.getElementById("language").value,

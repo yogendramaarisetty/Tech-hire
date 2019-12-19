@@ -74,7 +74,7 @@ class Candidate(models.Model):
     resume = models.FileField(default='default.pdf',upload_to='resumes',null=True)
 
     def __str__(self):
-        return f'{self.user.username}'
+        return f'{self.fullname} ({self.user.username})'
 
 class submittedcodes(models.Model):
     user = models.ForeignKey(Candidate,on_delete=models.CASCADE)
@@ -83,5 +83,20 @@ class submittedcodes(models.Model):
     submission = models.TextField(max_length=10000)
     score = models.IntegerField(default=0)
 
-
-
+class Candidate_codes(models.Model):
+    default_code={
+        'java': "//NOTE: Don't change class name\npublic class MyClass {\n    public static void main(String args[]) {\n      System.out.println(\"\" );\n    }\n}\n",
+        'python':"if __name__ == '__main__' in python:\n",
+        'csharp':"//Note don't change the class name \nusing System;\n\nclass Program\n{\n    static void Main() {\n        Console.Write(\"\");\n    }\n}\n",
+        'cpp':"#include <iostream>\n\nusing namespace std;\n\nint main() {\n    \n    cout<<\"\" << ;\n}\n",
+        'c':"#include<stdio.h>\n\nint main() {\n    \n    printf(\"\");\n    \n}\n",
+            }
+    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    c_code = models.TextField(default=default_code['c'],max_length=1000000)
+    cpp_code = models.TextField(default=default_code['cpp'],max_length=1000000)
+    csharp_code = models.TextField(default=default_code['csharp'],max_length=1000000)
+    java_code = models.TextField(default=default_code['java'],max_length=1000000)
+    python_code = models.TextField(default=default_code['python'],max_length=1000000)
+    def __str__(self):
+        return f'{self.candidate.fullname}  {self.question.Title}'

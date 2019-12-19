@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from .forms import UserRegisterForm,CandidateDetailsForm
-from .models import Candidate,Challenge,Question
+from .models import Candidate,Challenge,Question,Candidate_codes
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -122,27 +122,50 @@ def send_email(subject, msg, user):
         print("Email failed to send.")
 
 def testpage(request,challenge_id,u_id):
-    if request.is_ajax() and request.method == "POST" :
-        compile_run(request)
-        res={'msg':'this is working'}
-        return HttpResponse(json.dumps(res), content_type="application/json")
-
     challenge = Challenge.objects.get(pk=challenge_id)
     candidate = Candidate.objects.filter(test_name=challenge).first()
     questions = Question.objects.filter(challenge=challenge)
+    candidate_codes_obj = Candidate_codes.objects.filter(candidate=candidate)
     c= candidate.count
     candidate.count = c+1
     candidate.save()
+    for q in questions:
+        candidate_code = Candidate_codes(question=q,candidate=candidate)
+        candidate_code.save()
+    
+    
+    if request.is_ajax() and request.method == "POST" :
+        if request.POST.get('question') == 'yes':
+            q_id = request.POST.get('q_id')
+            question = Question.objects.get(pk=q_id)
+            candidate_question_code =""
+            for i in candidate_codes_obj:
+                if i.question.id is question.id:
+                    candidate_question_code = i
+            return question_codes(candidate_question_code)
+        elif request.POST.get('code') is 'yes':
+            compile_run(request)
+        res={'msg':'this is working'}
+        return HttpResponse(json.dumps(res), content_type="application/json")
     if candidate.count<=1:
         candidate.start_time=datetime.now()
         candidate.end_time=datetime.now()+timedelta(minutes=120)
         candidate.save()
-    return render(request,'challenge/testpage.html',{'challenge':challenge,'questions':questions,'candidate':candidate})
+    return render(request,'challenge/testpage.html',{'challenge':challenge,'questions':questions,'candidate':candidate,'candidate_codes':candidate_codes_obj,})
 
 def compile_run(request):
-    
     print('****** AJAX**********',)
     c = request.POST.get('code')
     l = request.POST.get('language_id')
     i = request.POST.get('input')
     print(c,l,i)
+
+def question_codes(candidate_question_code):
+    codes = {
+        'python':candidate_question_code.python_code,
+        'java':candidate_question_code.java_code,
+        'csharp':candidate_question_code.csharp_code,
+        'cpp':candidate_question_code.cpp_code,
+        'c':candidate_question_code.c_code,
+    }
+    return HttpResponse(json.dumps(codes), content_type="application/json")
