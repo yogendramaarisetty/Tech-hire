@@ -11364,9 +11364,11 @@ div#demo {
 label {
     color: aliceblue;
 }
+
 form#codeform {
     display: flex;
 }
+
 .sample-input {
     width: fit-content;
     min-width: 280px;
@@ -11376,6 +11378,7 @@ form#codeform {
     margin: 10px;
     margin-top: -10px;
 }
+
 .editor-header {
     width: 598px;
     min-height: 40px;
@@ -11386,6 +11389,7 @@ form#codeform {
     border-top-right-radius: 2px;
     border-top-left-radius: 2px;
 }
+
 button.btn.dropdown-toggle.btn-light {
     width: fit-content;
     min-width: 90px;
@@ -11395,12 +11399,30 @@ button.btn.dropdown-toggle.btn-light {
     background: #3a3b3b;
     color: #ffffff;
     font-weight: 100;
-    
     margin-left: 470px;
 }
-.btn-light:hover:not(:disabled):not(.disabled), .btn-light.hover:not(:disabled):not(.disabled), .btn-white:hover:not(:disabled):not(.disabled), .btn-white.hover:not(:disabled):not(.disabled) {
+
+.btn-light:hover:not(:disabled):not(.disabled),
+.btn-light.hover:not(:disabled):not(.disabled),
+.btn-white:hover:not(:disabled):not(.disabled),
+.btn-white.hover:not(:disabled):not(.disabled) {
     color: #c3c3c3;
 }
+
 .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
     width: fit-content;
+}
+
+.btn-primary-dark {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    color: #fff;
+    background-color: #2f4f72;
+    border-color: #007bff;
+}
+
+.btn-primary-dark:hover {
+    background-color: #0059b9;
+    color: #fff;
 }
