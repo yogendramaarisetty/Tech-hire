@@ -1,13 +1,5 @@
 window.define = window.define || ace.define;
 
-$(window).load(function() {
-    var u_id
-
-    console.log(u_id);
-    console.log(c_id);
-    console.log(u);
-});
-
 // Set the date we're counting down to
 var countDownDate = new Date(end_time).getTime();
 

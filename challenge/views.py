@@ -22,6 +22,7 @@ import json,time
 import smtplib
 from django.db.models import Q
 from django.utils import timezone
+from .compile_run_api import compile_run
 def home(request):
     if request.user.is_authenticated:
         return redirect('tests')
@@ -32,7 +33,6 @@ def home(request):
 
 
 def challenges(request):
-    print(request.user.username)
     context ={
         'challenges':Challenge.objects.all()
     }
@@ -46,7 +46,6 @@ def candidate_form(request,challenge_id):
     test = Challenge.objects.get(pk=challenge_id)
     candidate = Candidate.objects.filter(user=request.user)
     if candidate.filter(test_name= test).first() is None:
-        print("this is none")
         if request.method == "POST":
             form= CandidateDetailsForm(request.POST,request.FILES)
             if form.is_valid():
@@ -129,10 +128,14 @@ def testpage(request,challenge_id,u_id):
     c= candidate.count
     candidate.count = c+1
     candidate.save()
-    for q in questions:
-        candidate_code = Candidate_codes(question=q,candidate=candidate)
-        candidate_code.save()
-    
+
+    if candidate.count<=1:
+        candidate.start_time=datetime.now()
+        candidate.end_time=datetime.now()+timedelta(minutes=120)
+        candidate.save()
+        for q in questions:
+            candidate_code = Candidate_codes(question=q,candidate=candidate)
+            candidate_code.save()
     
     if request.is_ajax() and request.method == "POST" :
         if request.POST.get('question') == 'yes':
@@ -143,22 +146,45 @@ def testpage(request,challenge_id,u_id):
                 if i.question.id is question.id:
                     candidate_question_code = i
             return question_codes(candidate_question_code)
-        elif request.POST.get('code') is 'yes':
-            compile_run(request)
-        res={'msg':'this is working'}
+        code_output=""
+        if request.POST.get('compile_run') == 'yes':
+            code_output = save_run(request,candidate_codes_obj)
+        res={'msg':code_output}
         return HttpResponse(json.dumps(res), content_type="application/json")
-    if candidate.count<=1:
-        candidate.start_time=datetime.now()
-        candidate.end_time=datetime.now()+timedelta(minutes=120)
-        candidate.save()
     return render(request,'challenge/testpage.html',{'challenge':challenge,'questions':questions,'candidate':candidate,'candidate_codes':candidate_codes_obj,})
 
-def compile_run(request):
-    print('****** AJAX**********',)
-    c = request.POST.get('code')
-    l = request.POST.get('language_id')
-    i = request.POST.get('input')
-    print(c,l,i)
+def save_run(request,candidate_codes_obj):
+    q_id = request.POST.get('q_id')
+    question = Question.objects.get(pk=q_id)
+    language = request.POST.get('language')
+    code = request.POST.get('code')
+    custom_input = request.POST.get('input')
+    save_codes(candidate_codes_obj,code,language,question)
+    code_output = compile_run(language,code,custom_input,request)
+    print("***compile_run",code_output)
+    return code_output
+  
+def save_codes(candidate_codes_obj,code,language,question):
+    candidate_question_code=""
+    for i in candidate_codes_obj:
+        if i.question.id is question.id:
+            candidate_question_code = i
+            break    
+    if language == "Python":
+        candidate_question_code.python_code=code
+        candidate_question_code.save()
+    elif language == "C":
+        candidate_question_code.c_code=code
+        candidate_question_code.save()
+    elif language == "C++":
+        candidate_question_code.cpp_code=code
+        candidate_question_code.save()
+    elif language == "Java":
+        candidate_question_code.java_code=code
+        candidate_question_code.save()
+    elif language == "C#":
+        candidate_question_code.csharp_code=code
+        candidate_question_code.save()  
 
 def question_codes(candidate_question_code):
     codes = {

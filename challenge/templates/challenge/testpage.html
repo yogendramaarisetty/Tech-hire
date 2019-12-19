@@ -111,8 +111,8 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
     <textarea id="output" class="form-control" id="exampleFormControlTextarea4" rows="3" disabled></textarea>
   </div>
   <br><br>
-  <button type="button" class="btn btn-primary" onclick="runCode()" > Run </button>
-  <button type="button" class="btn btn-outline-success" style="margin-left: 38%;">Submit</button>
+  <button type="button" class="btn btn-primary" onclick="runCode()" > Save & Run </button>
+  <button type="button" class="btn btn-outline-success" style="margin-left: 22%;">Submit</button>
   </div>
 </form>
 </div>
@@ -124,9 +124,7 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.7/ext-language_tools.js"></script>
 
 <script>
-$(window).load(function() {
-  selectLang();
-})
+
 var lang = "Java";
 ace.require("ace/ext/language_tools");
 var editor = ace.edit("codeeditor");
@@ -145,9 +143,10 @@ var c_code;
 var cpp_code;
 var python_code;
 var csharp_code;
-
+var active_question
 function openQuestion(evt, questionName, q_id) {
     var i, tabcontent, tablinks;
+    active_question=q_id;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
@@ -172,6 +171,7 @@ function openQuestion(evt, questionName, q_id) {
                 c_code=json.c;
                 csharp_code=json.csharp;
                 cpp_code=json.cpp;
+                selectLang();
             }
         }).done(function() {
             var ajaxMins2 = new Date().getMinutes() - ajaxMins;
@@ -209,6 +209,8 @@ function runCode() {
         var ajaxMins = new Date().getMinutes();
         var ajaxSecs = new Date().getSeconds();
         var ajaxMS = new Date().getMilliseconds();
+        
+        $('#output').html("");
         $.ajax({
             type: 'POST',
             url: '',
@@ -220,7 +222,8 @@ function runCode() {
                 compile_run: 'yes',
                 code: editor.getValue(),
                 input: $('#input').val(),
-                language_id: document.getElementById("language").value,
+                language: document.getElementById("language").value,
+                q_id: active_question,
             },
             success: function(json) {
                 $('.loader').hide();
