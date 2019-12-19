@@ -11437,3 +11437,6 @@ li.nav-item {
     height: fit-content;
     margin: auto;
 }
+.sidebar-link.collapsed.active {
+    background: #1c293e;
+}

@@ -58,9 +58,10 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
         <ul class="sidebar-nav">
           <li class="sidebar-header">Questions</li>
         {% for q in questions %}
-           <li  class="tablinks" id="{{q.id}}" onclick="openQuestion(event, '{{q.Title}}','{{q.id}}')">
+           <li  class="tablinks"  onclick="openQuestion(event, '{{q.Title}}','{{q.id}}')">
             <span
               data-toggle="collapse"
+              id="{{q.id}}"
               class="sidebar-link collapsed"
               aria-expanded="false">
               <span class="align-middle">{{ forloop.counter }}. {{q.Title}}</span>
@@ -148,14 +149,21 @@ var cpp_code;
 var python_code;
 var csharp_code;
 var active_question;
+var first_q;
+var req_question;
+sidelist = document.getElementsByClassName("sidebar-link collapsed");
+active_question= sidelist[0];
 function openQuestion(evt, questionName, q_id) {
     var i, tabcontent, tablinks;
-    active_question=q_id;
+    active_question.className="sidebar-link collapsed";
+    req_question = q_id;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
     }
     document.getElementById(questionName).style.display = "block";
+    active_question = document.getElementById(q_id);
+    active_question.className = "sidebar-link collapsed active";
     getQuestions(q_id)
     
 }
@@ -236,7 +244,7 @@ function runCode() {
                 code: editor.getValue(),
                 input: $('#input').val(),
                 language: document.getElementById("language").value,
-                q_id: active_question,
+                q_id: req_question,
             },
             success: function(json) {
                 $('.loader').hide();
