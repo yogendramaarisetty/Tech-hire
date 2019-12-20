@@ -12,7 +12,7 @@ class InLineQuestions(admin.TabularInline):
 
 class ChallengeAdmin(admin.ModelAdmin):
     inlines = [InLineQuestions]
-    list_display=('Title','Slug','Duration','combine_title_slug','College')
+    list_display=('Title','Slug','Test_Duration','combine_title_slug','College')
     list_display_links = ('Title',
                         'Slug')
     list_filter = ('Title',
@@ -23,10 +23,10 @@ class ChallengeAdmin(admin.ModelAdmin):
                   'Slug',
                   'Title',
                   'Description',
-                  'Duration',
                   'Active',
                   'College',
-                  'Date'
+                  'Date',
+                  'Test_Duration',
             ),
         }),
     )

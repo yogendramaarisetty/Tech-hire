@@ -116,6 +116,7 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
   </div>
   <br><br>
   <button type="button" class="btn btn-primary-dark" onclick="runCode()" > Save & Run </button>
+  <div class="loader">Loading...</div>
   <button type="button" class="btn btn-outline-success" style="margin-left: 22%;">Submit</button>
   </div>
 </form>
@@ -188,7 +189,7 @@ function getQuestions(q_id){
                 c_code=json.c;
                 csharp_code=json.csharp;
                 cpp_code=json.cpp;
-                selectLang()
+                selectLang();
             }
         }).done(function() {
             var ajaxMins2 = new Date().getMinutes() - ajaxMins;
@@ -247,7 +248,7 @@ function runCode() {
                 q_id: req_question,
             },
             success: function(json) {
-                $('.loader').hide();
+                //$('.loader').hide();
                 $('#output').html(json.msg);
             }
         }).done(function() {

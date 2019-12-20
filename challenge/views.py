@@ -38,7 +38,7 @@ def challenges(request):
     }
     return render(request,'challenge/challenges.html',context)
 
-def test_instruction(request,pk):
+def test_instruction(request,pk,candidate_id):
     challenge = Challenge.objects.get(pk=pk)
     return render(request,'challenge/test_instruction.html',{'challenge':challenge})
 
@@ -52,7 +52,7 @@ def candidate_form(request,challenge_id):
                 form.instance.user = request.user
                 form.instance.test_name = test
                 form.save()
-                return redirect('test_instruction',pk=challenge_id)     
+                return redirect('test_instruction',pk=challenge_id,candidate_id=form.instance.id)     
         else:
             form= CandidateDetailsForm()
         return render(request,'challenge/candidate_details.html',
@@ -122,7 +122,7 @@ def send_email(subject, msg, user):
 
 def testpage(request,challenge_id,u_id):
     challenge = Challenge.objects.get(pk=challenge_id)
-    candidate = Candidate.objects.filter(test_name=challenge).first()
+    candidate = Candidate.objects.filter(user=request.user).first()
     questions = Question.objects.filter(challenge=challenge)
     candidate_codes_obj = Candidate_codes.objects.filter(candidate=candidate)
     c= candidate.count
@@ -130,8 +130,9 @@ def testpage(request,challenge_id,u_id):
     candidate.save()
 
     if candidate.count<=1:
+        duration = challenge.Test_Duration
         candidate.start_time=datetime.now()
-        candidate.end_time=datetime.now()+timedelta(minutes=120)
+        candidate.end_time=datetime.now()+timedelta(minutes=duration)
         candidate.save()
         for q in questions:
             candidate_code = Candidate_codes(question=q,candidate=candidate)

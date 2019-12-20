@@ -143,7 +143,7 @@ def execute_cpp(code,custom_input,file_name,path):
         os.chdir(root_path)
         return error 
 
-def execute_csharp(code,custom_input,file_name):
+def execute_csharp(code,custom_input,file_name,path):
     root_path = os.getcwd()
     path= os.path.join(path,'csharp_codes')
     os.chdir(f'{path}')
@@ -160,17 +160,22 @@ def execute_csharp(code,custom_input,file_name):
     for l in file_lines:
         code_file.write(l+"\n")
     code_file.close()
-    cmd = f'g++ {file_name_ext}'
-    p=os.getcwd()
-    compile_code = subprocess.Popen(cmd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,shell=True)
-    errors = compile_code.stderr.readlines()
-    if len(errors)==0:
-        run_code = subprocess.run("a", stdout=PIPE,input=custom_input, stderr=subprocess.PIPE,encoding='ascii',shell=True)
+    cmd = f'csc {file_name_ext}'
+    p = os.getcwd()
+    compile_code = subprocess.Popen(cmd,stdout=PIPE,stderr=PIPE,shell=True)
+    errors=""
+    for i in compile_code.stdout:
+        errors+=i.decode('UTF-8')
+    e = errors.split(':')
+    if len(e)<=2:
+        run_code = subprocess.run(file_name, stdout=PIPE,input=custom_input,encoding='ascii',shell=True)
         os.chdir(root_path)
         return run_code.stdout
     else:
-        error=""
-        for e in errors:
-            error+=e.decode("utf-8")
+        err=""
+        t = e[1].split('\n')
+        err+=t[-1]
+        for i in range(2,len(e)):
+            err+=e[i]
         os.chdir(root_path)
-        return error 
+        return err 

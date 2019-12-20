@@ -20,8 +20,8 @@ class Challenge(models.Model):
     Title = models.CharField(max_length=120)
     Description = models.TextField(max_length=520)
     College = models.CharField(max_length=120)
-    Duration = models.DurationField()
     Date = models.CharField(default="",max_length=20)
+    Test_Duration = models.IntegerField(default=0)
     Active = models.BooleanField()
     
     def __str__(self):
@@ -33,9 +33,9 @@ class Question(models.Model):
     Slug = models.SlugField()
     Title = models.CharField(max_length=120)
     Type= models.CharField(max_length=120)
-    Description = models.TextField(max_length=320)
-    sample_inputs= models.TextField(max_length=50)
-    sample_outputs= models.TextField(max_length=50)
+    Description = models.TextField(max_length=1000000)
+    sample_inputs= models.TextField(max_length=500)
+    sample_outputs= models.TextField(max_length=500)
     challenge = models.ForeignKey(Challenge,on_delete=models.SET_NULL,null=True)
 
     def __str__(self):
