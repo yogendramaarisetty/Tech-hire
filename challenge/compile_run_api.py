@@ -1,9 +1,9 @@
 import subprocess,os
 from subprocess import run, PIPE,STDOUT,Popen
 
-def compile_run(language,code,custom_input,request):
+def compile_run(language,code,custom_input,request,candidate):
     output=""
-    file_name = request.user.username+str(request.user.id)
+    file_name = str(request.user.id)+request.user.username+str(candidate.id)
     path = os.getcwd()+"\\code_files"
     if language == "Python":
         output = execute_python(code,custom_input,file_name,path)
@@ -40,6 +40,8 @@ def execute_python(code,custom_input,file_name,path):
     errors = run_code.stderr
     if len(errors)==0:
         os.chdir(root_path)
+        if run_code.stdout == "":
+            return "Your code didn't print anything."
         return run_code.stdout
     else:
         os.chdir(root_path)
@@ -70,6 +72,8 @@ def execute_java(code,custom_input,file_name,path):
     if len(errors)==0:
         run_code = subprocess.run(cmd, stdout=PIPE,input=custom_input, stderr=subprocess.PIPE,encoding='ascii',shell=True)
         os.chdir(root_path)
+        if run_code.stdout == "":
+            return "Your code didn't print anything."
         return run_code.stdout
     else:
         error=""
@@ -103,6 +107,8 @@ def execute_c(code,custom_input,file_name,path):
     if len(errors)==0:
         run_code = subprocess.run("a", stdout=PIPE,input=custom_input, stderr=subprocess.PIPE,encoding='ascii',shell=True)
         os.chdir(root_path)
+        if run_code.stdout == "":
+            return "Your code didn't print anything."
         return run_code.stdout
     else:
         error=""
@@ -135,6 +141,8 @@ def execute_cpp(code,custom_input,file_name,path):
     if len(errors)==0:
         run_code = subprocess.run("a", stdout=PIPE,input=custom_input, stderr=subprocess.PIPE,encoding='ascii',shell=True)
         os.chdir(root_path)
+        if run_code.stdout == "":
+            return "Your code didn't print anything."
         return run_code.stdout
     else:
         error=""
@@ -170,6 +178,8 @@ def execute_csharp(code,custom_input,file_name,path):
     if len(e)<=2:
         run_code = subprocess.run(file_name, stdout=PIPE,input=custom_input,encoding='ascii',shell=True)
         os.chdir(root_path)
+        if run_code.stdout == "":
+            return "Your code didn't print anything."
         return run_code.stdout
     else:
         err=""

@@ -56,7 +56,6 @@ class testcases(models.Model):
 # Create your models here.
 
 class Candidate(models.Model):
-    
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     fullname = models.CharField(default="",max_length=24)
     rollnumber = models.CharField(default="",max_length=20)
@@ -86,9 +85,9 @@ class submittedcodes(models.Model):
 class Candidate_codes(models.Model):
     default_code={
         'java': "//NOTE: Don't change class name\npublic class MyClass {\n    public static void main(String args[]) {\n      System.out.println(\"\" );\n    }\n}\n",
-        'python':"if __name__ == '__main__' in python:\n",
+        'python':"if __name__ == '__main__':\n",
         'csharp':"//Note don't change the class name \nusing System;\n\nclass Program\n{\n    static void Main() {\n        Console.Write(\"\");\n    }\n}\n",
-        'cpp':"#include <iostream>\n\nusing namespace std;\n\nint main() {\n    \n    cout<<\"\" << ;\n}\n",
+        'cpp':"#include <iostream>\n\nusing namespace std;\n\nint main() {\n    \n    cout<<\"\";\n}\n",
         'c':"#include<stdio.h>\n\nint main() {\n    \n    printf(\"\");\n    \n}\n",
             }
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
@@ -98,5 +97,6 @@ class Candidate_codes(models.Model):
     csharp_code = models.TextField(default=default_code['csharp'],max_length=1000000)
     java_code = models.TextField(default=default_code['java'],max_length=1000000)
     python_code = models.TextField(default=default_code['python'],max_length=1000000)
+    submitted_code = models.TextField(default="",max_length=1000000)
     def __str__(self):
         return f'{self.candidate.fullname}  {self.question.Title}'

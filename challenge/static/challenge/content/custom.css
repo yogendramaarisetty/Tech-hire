@@ -9599,8 +9599,7 @@ a.sidebar-link {
     left: -260px; }
 
 @media (min-width: 1px) and (max-width: 991.98px) {
-  .sidebar {
-    margin-left: -260px; }
+  .sidebar { }
     .sidebar .sidebar-content {
       left: -260px; }
     .sidebar.toggled {

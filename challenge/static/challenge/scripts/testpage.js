@@ -1,5 +1,12 @@
 window.define = window.define || ace.define;
-
+function instructionPop() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
+  }
+  function instructionPop2() {
+    var popup = document.getElementById("myPopup2");
+    popup.classList.toggle("show");
+  }
 // Set the date we're counting down to
 var countDownDate = new Date(end_time).getTime();
 

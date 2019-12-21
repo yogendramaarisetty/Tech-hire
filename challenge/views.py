@@ -38,13 +38,15 @@ def challenges(request):
     }
     return render(request,'challenge/challenges.html',context)
 
-def test_instruction(request,pk,candidate_id):
+def test_instruction(request,pk,c_id):
     challenge = Challenge.objects.get(pk=pk)
-    return render(request,'challenge/test_instruction.html',{'challenge':challenge})
+    candidate = Candidate.objects.get(pk=c_id)
+    return render(request,'challenge/test_instruction.html',{'challenge':challenge,'candidate':candidate})
 
 def candidate_form(request,challenge_id):
     test = Challenge.objects.get(pk=challenge_id)
     candidate = Candidate.objects.filter(user=request.user)
+    print(candidate)
     if candidate.filter(test_name= test).first() is None:
         if request.method == "POST":
             form= CandidateDetailsForm(request.POST,request.FILES)
@@ -52,14 +54,15 @@ def candidate_form(request,challenge_id):
                 form.instance.user = request.user
                 form.instance.test_name = test
                 form.save()
-                return redirect('test_instruction',pk=challenge_id,candidate_id=form.instance.id)     
+                return redirect('test_instruction',pk=challenge_id,c_id=form.instance.id)     
         else:
             form= CandidateDetailsForm()
         return render(request,'challenge/candidate_details.html',
                                 {'form':form}
                                 )
     else:
-        return redirect('test_instruction',pk=challenge_id)
+        c = candidate.filter(test_name = test).first()
+        return redirect('test_instruction',pk=challenge_id,c_id=c.id)
 
 def challenge_register(request):
     if request.method == "POST":
@@ -120,9 +123,10 @@ def send_email(subject, msg, user):
     except:
         print("Email failed to send.")
 
-def testpage(request,challenge_id,u_id):
+def testpage(request,challenge_id,c_id):
     challenge = Challenge.objects.get(pk=challenge_id)
-    candidate = Candidate.objects.filter(user=request.user).first()
+    candidate = Candidate.objects.get(pk=c_id)
+    print(candidate)
     questions = Question.objects.filter(challenge=challenge)
     candidate_codes_obj = Candidate_codes.objects.filter(candidate=candidate)
     c= candidate.count
@@ -161,8 +165,9 @@ def save_run(request,candidate_codes_obj):
     language = request.POST.get('language')
     code = request.POST.get('code')
     custom_input = request.POST.get('input')
+    candidate = candidate_codes_obj.first().candidate
     save_codes(candidate_codes_obj,code,language,question)
-    code_output = compile_run(language,code,custom_input,request)
+    code_output = compile_run(language,code,custom_input,request,candidate)
     print("***compile_run",code_output)
     return code_output
   

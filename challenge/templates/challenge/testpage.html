@@ -53,7 +53,7 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
             <line x1="12" y1="22.08" x2="12" y2="12"></line>
         </svg>
         <span class="align-middle">{{ challenge.Title }}</span></a>
-
+        
 
         <ul class="sidebar-nav">
           <li class="sidebar-header">Questions</li>
@@ -68,6 +68,15 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
           </li></a>
         {% endfor %}
         
+        <div class="popup" onclick="instructionPop2()" style="margin-left: 40%;margin-top: 230px;">Note
+        <span class="popuptext" id="myPopup2">
+        <ul class="note">
+        <li class="notelist">Test duration: {{challenge.Test_Duration}} mins</li>
+        <li class="notelist">Please ensure your code is submitted</li>
+        <li class="notelist">Marks will be alloted only if you submit code</li>
+         </ul>       </span>
+        </div>
+        </ul>
         </div>
       </div>
     </div>
@@ -93,6 +102,7 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
   {% csrf_token %}
   <div class="editor">
   <div class="editor-header">
+  <div class="header-title">COMPILER</div>
   <select id="language" onchange="selectLang()"  class="selectpicker">
   <option>C</option>
   <option>C++</option>
@@ -105,7 +115,7 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
   <div class='code-editor' id='codeeditor' ></div>
   </div>
   <div class="control">
-
+  
   <div class="form-group-dark purple-border">
     <label for="exampleFormControlTextarea4">Custom Inputs</label>
     <textarea id="input" class="form-control" id="exampleFormControlTextarea4" rows="3"></textarea>
@@ -114,10 +124,15 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
     <label for="exampleFormControlTextarea4">Output</label>
     <textarea id="output" class="form-control" id="exampleFormControlTextarea4" style="height: 230px;"rows="3" disabled></textarea>
   </div>
-  <br><br>
-  <button type="button" class="btn btn-primary-dark" onclick="runCode()" > Save & Run </button>
+  <div class="popup" onclick="instructionPop()">Instructions
+  <span class="popuptext" id="myPopup">Save & run the code before  navigating to other question or changing language</span>
+  </div>
+  <br>
   <div class="loader">Loading...</div>
+  <br>
+  <button type="button" class="btn btn-primary-dark" onclick="runCode()" > Save & Run </button>
   <button type="button" class="btn btn-outline-success" style="margin-left: 22%;">Submit</button>
+  
   </div>
 </form>
 </div>
@@ -170,6 +185,10 @@ function openQuestion(evt, questionName, q_id) {
 }
 
 function getQuestions(q_id){
+  
+        var ajaxMins = new Date().getMinutes();
+        var ajaxSecs = new Date().getSeconds();
+        var ajaxMS = new Date().getMilliseconds();
 
     $.ajax({
             type: 'POST',
@@ -248,7 +267,7 @@ function runCode() {
                 q_id: req_question,
             },
             success: function(json) {
-                //$('.loader').hide();
+                $('.loader').hide();
                 $('#output').html(json.msg);
             }
         }).done(function() {
