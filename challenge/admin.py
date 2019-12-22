@@ -77,6 +77,7 @@ class CandidateAdmin(admin.ModelAdmin):
         'graduation_year',
         'mobile_number',
         'total_score',
+        'completed_status',
         'resume',
     )
     fieldsets = (
@@ -95,6 +96,7 @@ class CandidateAdmin(admin.ModelAdmin):
                   'start_time',
                   'end_time',
                   'count',
+                  'completed_status',
             ),
         }),
     )

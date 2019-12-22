@@ -11707,3 +11707,35 @@ li.nav-item {
     letter-spacing: 0.6px;
     padding: inherit;
 }
+.testcases {
+    width: 83%;
+    margin: auto;
+    margin-left: 17.5%;
+    padding: 10px;
+}
+tr {
+    box-shadow: 0 1px 1px 0 rgba(165, 165, 165, 0.28);
+}
+tr:hover {
+    box-shadow: 0 1px 2px 0 rgba(86, 86, 86, 0.28);
+}
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+    margin: auto;
+    color: #212529;
+    box-shadow: 0 1px 4px 0 rgba(32, 33, 36, 0.28);
+}
+.table-active, .table-active>th, .table-active>td {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+thead {
+    background: #dbdbdbf2;
+    box-shadow: 0 1px 2px 0 rgba(32, 33, 36, 0.45);
+}
+img.status-icon {
+    position: inherit;
+}
+tr {
+    box-shadow: 0 1px 1px 0 rgba(165, 165, 165, 0.09);
+}

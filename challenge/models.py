@@ -43,16 +43,16 @@ class Question(models.Model):
 
 class testcases(models.Model):
     question = models.OneToOneField(Question,on_delete=models.CASCADE)
-    input1 = models.TextField(default="",max_length=1000)
-    input2 = models.TextField(default="",max_length=1000)
-    input3 = models.TextField(default="",max_length=1000)
-    input4 = models.TextField(default="",max_length=1000)
-    input5 = models.TextField(default="",max_length=1000)
-    output1 = models.TextField(default="",max_length=1000)
-    output2 = models.TextField(default="",max_length=1000)
-    output3 = models.TextField(default="",max_length=1000)
-    output4 = models.TextField(default="",max_length=1000)
-    output5 = models.TextField(default="",max_length=1000)
+    input1 = models.TextField(default="",max_length=1000000)
+    output1 = models.TextField(default="",max_length=1000000)
+    input2 = models.TextField(default="",max_length=1000000)
+    output2 = models.TextField(default="",max_length=1000000)
+    input3 = models.TextField(default="",max_length=1000000)
+    output3 = models.TextField(default="",max_length=1000000)
+    input4 = models.TextField(default="",max_length=1000000)
+    output4 = models.TextField(default="",max_length=1000000)
+    input5 = models.TextField(default="",max_length=1000000)
+    output5 = models.TextField(default="",max_length=1000000)
 # Create your models here.
 
 class Candidate(models.Model):
@@ -71,7 +71,8 @@ class Candidate(models.Model):
     start_time = models.DateTimeField(blank=True,null=True,auto_now=False, auto_now_add=False)
     end_time = models.DateTimeField(blank=True,null=True,auto_now=False, auto_now_add=False)
     resume = models.FileField(default='default.pdf',upload_to='resumes',null=True)
-
+    completed_status = models.BooleanField(default=False)
+    Total_Score = models.IntegerField(default=0)
     def __str__(self):
         return f'{self.fullname} ({self.user.username})'
 
@@ -98,5 +99,6 @@ class Candidate_codes(models.Model):
     java_code = models.TextField(default=default_code['java'],max_length=1000000)
     python_code = models.TextField(default=default_code['python'],max_length=1000000)
     submitted_code = models.TextField(default="",max_length=1000000)
+    score = models.IntegerField(default=0)
     def __str__(self):
         return f'{self.candidate.fullname}  {self.question.Title}'

@@ -14,6 +14,7 @@
 {% with questions|first as question %}
  $(window).load(function() {
     $("#{{question.id}}").click();
+     $('#testcase-table').hide();
   });
 {% endwith %}
 
@@ -99,42 +100,92 @@ var end_time= "{{candidate.end_time|date:"M d, Y H:i:s"}}"
 <div class="compiler-container">
 
 <form id="codeform" method="POST" >
-  {% csrf_token %}
-  <div class="editor">
-  <div class="editor-header">
-  <div class="header-title">COMPILER</div>
-  <select id="language" onchange="selectLang()"  class="selectpicker">
-  <option>C</option>
-  <option>C++</option>
-  <option>Java</option>
-  <option>Python</option>
-  <option>C#</option>
-</select>
+      {% csrf_token %}
+      <div class="editor">
+      <div class="editor-header">
+      <div class="header-title">COMPILER</div>
+      <select id="language" onchange="selectLang()"  class="selectpicker">
+      <option>C</option>
+      <option>C++</option>
+      <option>Java</option>
+      <option>Python</option>
+      <option>C#</option>
+    </select>
 
-  </div>
-  <div class='code-editor' id='codeeditor' ></div>
-  </div>
-  <div class="control">
-  
-  <div class="form-group-dark purple-border">
-    <label for="exampleFormControlTextarea4">Custom Inputs</label>
-    <textarea id="input" class="form-control" id="exampleFormControlTextarea4" rows="3"></textarea>
-  </div><br>
-  <div class="form-group-dark purple-border">
-    <label for="exampleFormControlTextarea4">Output</label>
-    <textarea id="output" class="form-control" id="exampleFormControlTextarea4" style="height: 230px;"rows="3" disabled></textarea>
-  </div>
-  <div class="popup" onclick="instructionPop()">Instructions
-  <span class="popuptext" id="myPopup">Save & run the code before  navigating to other question or changing language</span>
-  </div>
-  <br>
-  <div class="loader">Loading...</div>
-  <br>
-  <button type="button" class="btn btn-primary-dark" onclick="runCode()" > Save & Run </button>
-  <button type="button" class="btn btn-outline-success" style="margin-left: 22%;">Submit</button>
-  
-  </div>
+      </div>
+      <div class='code-editor' id='codeeditor' ></div>
+      </div>
+      <div class="control">
+      
+      <div class="form-group-dark purple-border">
+        <label for="exampleFormControlTextarea4">Custom Inputs</label>
+        <textarea id="input" class="form-control" id="exampleFormControlTextarea4" rows="3"></textarea>
+      </div><br>
+      <div class="form-group-dark purple-border">
+        <label for="exampleFormControlTextarea4">Output</label>
+        <textarea id="output" class="form-control" id="exampleFormControlTextarea4" style="height: 230px;"rows="3" disabled></textarea>
+      </div>
+      <div class="popup" onclick="instructionPop()">Instructions
+      <span class="popuptext" id="myPopup">Save & run the code before  navigating to other question or changing language</span>
+      </div>
+      <br>
+      <div class="loader">Loading...</div>
+      <br>
+      <button type="button" class="btn btn-primary-dark" onclick="runCode()" > Save & Run </button>
+      <button type="button" class="btn btn-outline-success" onclick="submitCode()" style="margin-left: 22%;">Submit</button>
+      
+      </div>
 </form>
+</div>
+<div id="testcase-table" class="testcases">
+<table class="table table-borderless">
+  <thead>
+    <tr>
+      <th scope="col">Sno.</th>
+      <th scope="col">Testcase</th>
+      <th scope="col">Description</th>
+      <th scope="col">Result</th>
+      <th scope="col">Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>Test Case 1</td>
+      <td id="tcdescription1"></td>
+      <td id="tcstatus1"></td>
+      <td id="tcscore1"></td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>Test Case 2</td>
+      <td id="tcdescription2"></td>
+      <td id="tcstatus2"></td>
+      <td id="tcscore2"></td>
+    </tr>
+    <tr>
+      <th scope="row">3</th>
+      <td>Test Case 3</td>
+      <td id="tcdescription3"></td>
+      <td id="tcstatus3"></td>
+      <td id="tcscore3"></td>
+    </tr>
+    <tr>
+      <th scope="row">4</th>
+      <td>Test Case 4</td>
+      <td id="tcdescription4"></td>
+      <td id="tcstatus4"></td>
+      <td id="tcscore4"></td>
+    </tr>
+    <tr>
+      <th scope="row">5</th>
+      <td>Test Case 5</td>
+      <td id="tcdescription5"></td>
+      <td id="tcstatus5"></td>
+      <td id="tcscore5"></td>
+    </tr>
+  </tbody>
+</table>
 </div>
 
 </div>
@@ -167,6 +218,7 @@ var csharp_code;
 var active_question;
 var first_q;
 var req_question;
+var testcases;
 sidelist = document.getElementsByClassName("sidebar-link collapsed");
 active_question= sidelist[0];
 function openQuestion(evt, questionName, q_id) {
@@ -189,6 +241,7 @@ function getQuestions(q_id){
         var ajaxMins = new Date().getMinutes();
         var ajaxSecs = new Date().getSeconds();
         var ajaxMS = new Date().getMilliseconds();
+        $('#testcase-table').hide();
 
     $.ajax({
             type: 'POST',
@@ -279,6 +332,79 @@ function runCode() {
     } else {
         $('#output').html("Don't submit empty code");
     }
+}
+
+function submitCode(){
+   $('#testcase-table').show();
+  if (editor.getValue() != "") {
+        $('.loader').show();
+        var ajaxMins = new Date().getMinutes();
+        var ajaxSecs = new Date().getSeconds();
+        var ajaxMS = new Date().getMilliseconds();
+        lang = document.getElementById("language").value;
+        updateVariables(lang);
+        $('#output').html("");
+        
+        htmlloader="<img class='status-icon' src='/static/img/spinner.gif' alt='Loading...'>"
+        $('#tcdescription1').html(htmlloader);
+                $('#tcdescription2').html(htmlloader);
+                $('#tcdescription3').html(htmlloader);
+                $('#tcdescription4').html(htmlloader);
+                $('#tcdescription5').html(htmlloader);
+                $('#tcstatus1').html(htmlloader);
+                $('#tcstatus2').html(htmlloader);
+                $('#tcstatus3').html(htmlloader);
+                $('#tcstatus4').html(htmlloader);
+                $('#tcstatus5').html(htmlloader);
+                $('#tcscore1').html(htmlloader);
+                $('#tcscore2').html(htmlloader);
+                $('#tcscore3').html(htmlloader);
+                $('#tcscore4').html(htmlloader);
+                $('#tcscore5').html(htmlloader);
+                
+        $.ajax({
+            type: 'POST',
+            url: '',
+            dataType: 'json',
+            cache: false,
+            async: true,
+            data: {
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                submit_code: 'yes',
+                code: editor.getValue(),
+                language: document.getElementById("language").value,
+                q_id: req_question,
+            },
+
+            success: function(json) {
+                $('.loader').hide();
+                $('#tcdescription1').html(json.tcdescription1);
+                $('#tcdescription2').html(json.tcdescription2);
+                $('#tcdescription3').html(json.tcdescription3);
+                $('#tcdescription4').html(json.tcdescription4);
+                $('#tcdescription5').html(json.tcdescription5);
+                $('#tcstatus1').html(json.tcstatus1);
+                $('#tcstatus2').html(json.tcstatus2);
+                $('#tcstatus3').html(json.tcstatus3);
+                $('#tcstatus4').html(json.tcstatus4);
+                $('#tcstatus5').html(json.tcstatus5);
+                $('#tcscore1').html(json.tcscore1);
+                $('#tcscore2').html(json.tcscore2);
+                $('#tcscore3').html(json.tcscore3);
+                $('#tcscore4').html(json.tcscore4);
+                $('#tcscore5').html(json.tcscore5);
+                
+            }
+        }).done(function() {
+            var ajaxMins2 = new Date().getMinutes() - ajaxMins;
+            var ajaxSecs2 = (new Date().getSeconds() % 60) - ajaxSecs;
+            var ajaxMS2 = new Date().getMilliseconds() - ajaxMS;
+            console.log(ajaxSecs2, " seconds",ajaxMS2, " milli seconds");
+        });
+    } else {
+        $('#output').html("Don't submit empty code");
+    }
+
 }
 function updateVariables(lang){
   if(lang=="C"){
