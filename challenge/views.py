@@ -130,7 +130,6 @@ def testpage(request,challenge_id,c_id):
     candidate = Candidate.objects.get(pk=c_id)
     questions = Question.objects.filter(challenge=challenge)
     candidate_codes_obj = Candidate_codes.objects.filter(candidate=candidate)
-    print(candidate)
     if candidate.completed_status is False:
        
         candidate_codes_obj = Candidate_codes.objects.filter(candidate=candidate)
@@ -147,9 +146,20 @@ def testpage(request,challenge_id,c_id):
             for q in questions:
                 candidate_code = Candidate_codes(question=q,candidate=candidate)
                 candidate_code.save()
-        
+       
         if request.is_ajax() and request.method == "POST" :
             code_output=""
+            if request.POST.get('submit_test')=='yes':
+                candidate.completed_status = True
+                candidate.save()
+                total_score=0
+                for i in candidate_codes_obj:
+                    total_score+=i.score
+                candidate.total_score = total_score
+                candidate.save()
+                print(candidate,candidate.total_score)
+                print('submission request Total Score:',total_score)
+                return redirect('submittedpage',challenge_id=challenge_id,c_id=c_id)
             if request.POST.get('question') == 'yes':
                 q_id = request.POST.get('q_id')
                 question = Question.objects.get(pk=q_id)
@@ -177,6 +187,8 @@ def testpage(request,challenge_id,c_id):
     else:
         return redirect('completed_testpage')
 
+def submittedpage(request,challenge_id,c_id):
+    return render(request,'challenge/test_submitted_successfully.html')
     
 def save_run(request,candidate_codes_obj):
     q_id = request.POST.get('q_id')

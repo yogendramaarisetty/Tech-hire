@@ -72,7 +72,6 @@ class Candidate(models.Model):
     end_time = models.DateTimeField(blank=True,null=True,auto_now=False, auto_now_add=False)
     resume = models.FileField(default='default.pdf',upload_to='resumes',null=True)
     completed_status = models.BooleanField(default=False)
-    Total_Score = models.IntegerField(default=0)
     def __str__(self):
         return f'{self.fullname} ({self.user.username})'
 

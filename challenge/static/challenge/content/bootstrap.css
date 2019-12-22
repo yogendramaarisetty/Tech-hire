@@ -11739,3 +11739,29 @@ img.status-icon {
 tr {
     box-shadow: 0 1px 1px 0 rgba(165, 165, 165, 0.09);
 }
+.sample-input {
+    width: fit-content;
+    min-width: 280px;
+    padding: 15px;
+    background: #d4d4d4ba;
+    border-radius: 5px;
+    margin: 10px;
+    margin-top: -10px;
+}
+.loader {
+    color: #ffffff;
+    font-size: 21px;
+    text-indent: -9999em;
+    overflow: hidden;
+    width: 1em;
+    margin: auto;
+    margin-top: 10px;
+    height: 1em;
+    border-radius: 50%;
+    position: relative;
+    -webkit-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+    animation: load6 1.7s infinite ease, round 1.7s infinite ease;
+}
